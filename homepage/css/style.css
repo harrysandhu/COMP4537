@@ -1,0 +1,64 @@
+.container {
+    width: 100%;
+    height: 100%;
+
+}
+
+code {
+    font-size: large;
+}
+
+.vertical-flex {
+    display: flex;
+    flex-direction: column;
+}
+.horizontal-flex{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+p{
+    font-family: 'Playfair Display', serif;
+    line-height: 2px;
+}
+h4{
+    font-family: 'Playfair Display', serif;
+    font-size:40px;
+    line-height: 25px;
+}
+.header-container{
+    justify-content: center;
+    align-items: center;
+}
+
+
+.header-span{
+    font-size:20px !important;
+
+}
+
+.header-photo{
+    justify-content: center;
+    width:100%;
+    align-items: center;
+}
+
+.profile_pic{
+    width:200px;
+    height:auto;
+}
+
+.main-content{
+    width:100%;
+}
+
+
+@media only screen and (max-width: 1000px) {
+    p{
+        line-height: 20px;
+    }
+    h4{
+        line-height: 40px;
+    }
+  }
