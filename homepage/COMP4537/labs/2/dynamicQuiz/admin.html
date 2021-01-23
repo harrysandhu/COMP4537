@@ -11,7 +11,11 @@
 </head>
 <body>
 <script>
-    let questionCount = 0;
+    function genid(){
+        let r = Math.random().toString(36).substring(7);
+        return r
+    }
+    let questionCount = 1;
 
     function Question(id, question, options, answer) {
         this.id = id;
@@ -21,7 +25,7 @@
     }
 
     function questionBox() {
-        this.id = uuidv4();
+        this.id = genid();
         let newQ = new Question(this.id);
 
         let title = document.createElement("h3");
@@ -39,6 +43,7 @@
             let radio = document.createElement("input");
             radio.type = "radio";
             radio.name = "question";
+            radio.id = this.id + "-" + i
 
             let answer = document.createElement("input");
             answer.type = "text";
