@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sarah Esla</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<script>
+ 
+    document.addEventListener("DOMContentLoaded", function(event) {
+        let addBtn = H._(document, "#add-question");
+        addBtn.addEventListener("click", Question.wizard())
+    })
+
+  
+    
+    class Question{
+       
+        constructor(id, question, options, answer){
+            this.id = id;
+            this.question = question;
+            this.options = options;
+            this.answer = answer;
+        }
+        
+        static parse(json_str){
+            let o = JSON.parse(json_str);
+            return new Question(o.id, o.question, o.options, o.answer)
+        }
+
+        static wizard(){
+            return function(){
+                let qid = H.genid()
+                document.createElement('div')
+                let template = H._(document, "#new-question");
+                const c = document.importNode(template.content, true);
+                H._(c, ".container").id = "container-" + qid;
+                H._(c, ".title").textContent = "hello, " + qid;
+                H._(c, ".q-input").id = "input-" + qid;
+                H._(c, ".submit").id = "submit-" + qid;
+                H._(c, ".submit").addEventListener("click", Question.sv(qid))
+                document.body.appendChild(c)
+            }
+        }       
+
+        static sv(id){
+            return function(){
+                let text_content = H._(document, "#input-" + id).value;
+                console.log(text_content)
+            }
+        }
+
+        save(){
+            localStorage.setItem(this.id, JSON.stringify(this))
+        }
+    }
+
+    class H{
+        static genid(){
+            let r = Math.random().toString(36).substring(7);
+            return r
+        }
+
+        static _(node, identifier){
+            return node.querySelector(identifier);
+        }
+
+
+    }
+    
+
+
+
+
+</script>
+    <h1>Add Some Questions</h1>
+    <button id="add-question">Add Question</button>
+    <br><br>
+
+
+    <template id="new-question">
+        <div class="container">
+            <h3 class="title"></h3>
+            <input class="q-input" />
+            <button class="submit">Save</button>
+        </div>
+    </template>
+
+
+</body>
+</html>
