@@ -14,12 +14,24 @@
     document.addEventListener("DOMContentLoaded", function(event) {
         let addBtn = H._(document, "#add-question");
         addBtn.addEventListener("click", Question.wizard())
+        let qm = new QuestionManager();
+        qm.render()
     })
 
-  
-    
+    class QuestionManager{
+        constructor(){
+            this.question_list = JSON.parse(localStorage.getItem("qlist"));
+        }
+
+        render(){
+            for(let id in this.question_list){
+                console.log(this.question_list[id])
+            }
+        }
+
+    }
+
     class Question{
-       
         constructor(id, question, options, answer){
             this.id = id;
             this.question = question;
@@ -85,8 +97,20 @@
     <template id="new-question">
         <div class="container">
             <h3 class="title"></h3>
-            <input class="q-input" />
-            <button class="submit">Save</button>
+            <textarea class="box"></textarea>
+            <input type="radio" class="radio-0" value="" checked/>
+            <input type="text" class="option-0" />
+
+            <input type="radio"  class="radio-1" value="" />
+            <input type="text" class="option-1" />
+
+            <input type="radio" class="radio-2"  value="" />
+            <input type="text" class="option-2" />
+
+            <input type="radio" class="radio-3" value="" />
+            <input type="text" class="option-3" />
+            
+             <button class="submit">Save Question</button>
         </div>
     </template>
 
