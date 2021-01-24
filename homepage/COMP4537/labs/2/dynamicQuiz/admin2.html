@@ -13,22 +13,31 @@
  
     document.addEventListener("DOMContentLoaded", function(event) {
         let addBtn = H._(document, "#add-question");
-        addBtn.addEventListener("click", Question.wizard())
+        addBtn.addEventListener("click", Question.handleRender(H.genid()))
         let qm = new QuestionManager();
         qm.render()
     })
 
+    let active_questions = 0
     class QuestionManager{
         constructor(){
-            this.question_list = JSON.parse(localStorage.getItem("qlist"));
+            this.qlist = JSON.parse(localStorage.getItem("qlist"));
         }
 
         render(){
-            for(let id in this.question_list){
-                console.log(this.question_list[id])
+            for(let id in this.qlist){
+                Question.render(id, true)
             }
         }
 
+        count(){
+            let count = 0;
+            for(let prop in this.qlist){
+                if(this.qlist.hasOwnProperty(prop))
+                    count++
+            }
+            return count;
+        }
     }
 
     class Question{
@@ -44,20 +53,49 @@
             return new Question(o.id, o.question, o.options, o.answer)
         }
 
-        static wizard(){
+        static handleRender(qid){
             return function(){
-                let qid = H.genid()
-                document.createElement('div')
-                let template = H._(document, "#new-question");
-                const c = document.importNode(template.content, true);
-                H._(c, ".container").id = "container-" + qid;
-                H._(c, ".title").textContent = "hello, " + qid;
-                H._(c, ".q-input").id = "input-" + qid;
-                H._(c, ".submit").id = "submit-" + qid;
-                H._(c, ".submit").addEventListener("click", Question.sv(qid))
-                document.body.appendChild(c)
+             active_questions += 1
+               Question.render(qid, false)
             }
-        }       
+        }    
+
+        static render(qid, exists){
+            let qm = new QuestionManager();
+
+            let template = H._(document, "#new-question");
+            const c = document.importNode(template.content, true);
+
+            // ------- identify by qids ----------
+            H._(c, ".container").id = "container-" + qid;
+            H._(c, ".box").id = "box-" + qid
+            for(let i = 0; i < 4; i++){
+                H._(c, ".input-"+i).name = "input-" + qid;
+                H._(c, ".radio-"+i).name = "radio-" + qid;
+            }
+            H._(c, ".submit").id = "submit-" + qid;
+            // -----------------------------------
+            H._(c, ".title").textContent = "Question " + Number(qm.count()+ active_questions);
+            H._(c, ".submit").addEventListener("click", Question.save(qid))
+            document.body.appendChild(c)
+            if(exists){
+             
+                let data = qm.qlist[qid];
+                console.log(data)
+                H._(document, "#box-"+qid).value = data.question
+                let radios = H.n("radio-"+qid)
+                let inputs = H.n("input-"+qid)
+
+                for(let i = 0; i < 4; i++){
+                    inputs[i].value = data.options[i]
+                    if(data.options[i] == data.answer){
+                        radios[i].checked = true
+                    }
+                }
+            }
+        }
+
+
 
         static sv(id){
             return function(){
@@ -66,8 +104,28 @@
             }
         }
 
-        save(){
-            localStorage.setItem(this.id, JSON.stringify(this))
+        static save(id){
+            return function(){
+                let question = H._(document, "#box-"+id).value;
+                let radios = H.n("radio-"+id)
+                let inputs = H.n("input-"+id) 
+                console.log(radios)
+                let answer = null
+                let input_values = []
+
+                for(let i = 0; i < 4; i++){
+                    if(radios[i].checked){
+                        answer = inputs[i].value;
+                    }
+                    input_values.push(inputs[i].value);
+                }
+                let q = new Question(id, question, input_values, answer);
+                console.log(q)
+                let qm = new QuestionManager()
+                qm.qlist[id] = q
+                console.log("new list", qm.qlist)
+                localStorage.setItem("qlist", JSON.stringify(qm.qlist));
+            }
         }
     }
 
@@ -81,6 +139,9 @@
             return node.querySelector(identifier);
         }
 
+        static n(name){
+            return document.getElementsByName(name);
+        }
 
     }
     
@@ -98,18 +159,19 @@
         <div class="container">
             <h3 class="title"></h3>
             <textarea class="box"></textarea>
-            <input type="radio" class="radio-0" value="" checked/>
-            <input type="text" class="option-0" />
-
-            <input type="radio"  class="radio-1" value="" />
-            <input type="text" class="option-1" />
-
-            <input type="radio" class="radio-2"  value="" />
-            <input type="text" class="option-2" />
-
-            <input type="radio" class="radio-3" value="" />
-            <input type="text" class="option-3" />
-            
+            <br/>
+            <input type="radio" name="" class="radio-0" value="" checked/>
+            <input type="text" class="input-0" />
+            <br/>
+            <input type="radio" name="" class="radio-1" value="" />
+            <input type="text" class="input-1" />
+            <br/>
+            <input type="radio" name="" class="radio-2"  value="" />
+            <input type="text" class="input-2" />
+            <br/>
+            <input type="radio" name="" class="radio-3" value="" />
+            <input type="text" class="input-3" />
+            <br/>
              <button class="submit">Save Question</button>
         </div>
     </template>
