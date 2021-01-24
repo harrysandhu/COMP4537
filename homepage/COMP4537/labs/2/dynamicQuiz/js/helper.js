@@ -1,3 +1,4 @@
+
 class H{
     static genid(){
         let r = Math.random().toString(36).substring(7);

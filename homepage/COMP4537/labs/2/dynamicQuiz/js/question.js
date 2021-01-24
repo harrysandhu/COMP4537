@@ -29,7 +29,7 @@ class Question{
         // template.id = 
         let c = document.importNode(template.content, true);
             
-            c.id ="new-question-" + qid
+        c.id ="new-question-" + qid
         // ------- identify by qids ----------
         H._(c, ".container").id = "container-" + qid;
 

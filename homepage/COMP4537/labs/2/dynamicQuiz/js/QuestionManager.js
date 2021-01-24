@@ -1,5 +1,4 @@
-
-    class QuestionManager{
+class QuestionManager{
     constructor(){
         let questions = localStorage.getItem("qlist")
         if(questions == null){
