@@ -6,99 +6,40 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-    <!-- UUID -->
-    <script src="https://unpkg.com/uuid@latest/dist/umd/uuidv4.min.js"></script>
+    <script src="./js/question.js"></script>
+    <script src="./js/helper.js"></script>
+     <script src="./js/admin.js"></script>
+    <script src="./js/QuestionManager.js"></script>
 </head>
 <body>
-<script>
-    function genid(){
-        let r = Math.random().toString(36).substring(7);
-        return r
-    }
-    let questionCount = 1;
-    let questions = []
 
-    function Question(id, question, options, answer) {
-        this.id = id;
-        this.question = question;
-        this.options = options;
-        this.answer = answer;
-    }
-
-   
-    function questionBox() {
-        this.id = genid();
-        //let newQ = new Question(this.id);
-
-        let title = document.createElement("h3");
-        title.innerHTML = "Question " + questionCount.toString();
-        document.body.appendChild(title);
-        questionCount++;
-
-        let box = document.createElement("textarea");
-        box.id = this.id + "-box"
-        document.body.appendChild(box);
-
-
-        let newline = document.createElement("br");
-        document.body.appendChild(newline);
-
-        for (let i = 0; i < 4; i++) {
-            let radio = document.createElement("input");
-            radio.type = "radio";
-            if(i == 0){
-                radio.checked = true;
-            }
-            radio.name = this.id + "-option";
-            radio.id = this.id + "-" + i + "-radio";
-            let answer = document.createElement("input");
-            answer.type = "text";
-            answer.id = this.id + "-" + i + "-input";
-            answer.name = this.id + "-answer"
-            document.body.appendChild(radio);
-            document.body.appendChild(answer);
-            let newline = document.createElement("br");
-            document.body.appendChild(newline);
-        }
-
-        let saveBtn = document.createElement("input");
-       
-        saveBtn.type = "button";
-        saveBtn.value = "saveQ";
-        saveBtn.onclick = saveQuestion(this.id)
-       
-        document.body.appendChild(saveBtn);
-    }
-
-    function saveQuestion(id) {
-        return function(){
-            let question = document.getElementById(id+"-box").value
-            let options = document.getElementsByName(id+"-option")
-            let answers = document.getElementsByName(id+"-answer")
-            let answer = null
-            let aws = []
-            for(let i = 0; i < 4; i++){
-                 if (options[i].checked){
-                     answer = options[i].id
-                 }
-                 aws.push(answers[i].value)
-            }
-           
-            let q = new Question(id, question, aws, aws[answer.split("-")[1]])
-            console.log(q)
-            questions.push(q)
-           localStorage.setItem(id, JSON.stringify(q))
-
-        }
-    }
-    function saveToStorage() {
-        
-    }
-</script>
     <h1>Add Some Questions</h1>
-    <button onclick="questionBox()">Add Question</button>
+       <a href="index.html"> Back</a>
+    <button id="add-question">Add Question</button>
     <br><br>
 
+
+    <template id="new-question">
+        <div class="container">
+            <h3 class="title"></h3>
+            <textarea class="box"></textarea>
+            <br/>
+            <input type="radio" name="" class="radio-0" value="" checked/>
+            <input type="text" class="input-0" />
+            <br/>
+            <input type="radio" name="" class="radio-1" value="" />
+            <input type="text" class="input-1" />
+            <br/>
+            <input type="radio" name="" class="radio-2"  value="" />
+            <input type="text" class="input-2" />
+            <br/>
+            <input type="radio" name="" class="radio-3" value="" />
+            <input type="text" class="input-3" />
+            <br/>
+             <button class="submit">Save Question</button>
+             <button class="delete">Delete</button>
+        </div>
+    </template>
 
 
 </body>
