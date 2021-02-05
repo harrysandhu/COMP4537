@@ -24,7 +24,7 @@ stonk.get("/ptest", (req, res) =>{
 stonk.get(path.join(L4 + "/getDate"), (req, res) => {
     try{
         let name = stonk.query.name
-        stonk.html("Hello " + name + ", here is the server's current date and time: " + utils.getDate())
+        stonk.html("Hello " + name + ", here is the server's current date and time: " + utils.getDate(), 200)
     }catch(e){
         console.log(e)
         stonk.html("Invalid Request: You need to provide your name", 400)
