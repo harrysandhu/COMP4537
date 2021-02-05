@@ -48,6 +48,8 @@ class Stonk{
                 res.write("<h2>404 - Not found : "+ f +"</h2>")
                 res.end()
             });
+            let ft = file.split(".")[1]
+            res.writeHead(200, {'Content-Type': filetypes[ft]});
             readStream.pipe(res)
     }
  
