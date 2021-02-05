@@ -18,7 +18,6 @@ Stonk's Philosophy: "Let it rip or die a virgin 🌪
 
 const Stonk = require('stonk')
 let stonk = new Stonk()
-  
 ```
 
 - This instance of stonk manages:
@@ -47,7 +46,6 @@ let stonk = new Stonk()
         let data = stonk.data  
   })
 
-
 ```
 
 #### Serving static files
@@ -59,5 +57,56 @@ let appDir = path.dirname(require.main.filename)+ "/"
 stonk.files(appDir)
 
 ```
+
+#### Serving raw HTML
+
+- Stonk allows you to serve raw html as a string
+
+```javascript
+stonk.html("<h3>Hello, world</h3>", <STATUS_CODE>)
+
+```
+
+#### Serving custom static files
+
+- Stonk uses node.js's fs.createReadStream to create a readstream and then sends it through a 
+pipline using readstream.pipe(res), so that you dont have any errors with loading large files.
+
+
+- This gives stonk a full file server capability.
+
+```javascript
+stonk.serveFile(res, "myFile.txt")
+```
+
+
+
+#### TO RUN
+
+- Stonk doesn't really run, it RIPS.
+
+- To rip stonk,
+
+```javascript
+stonk.rip(PORT, ()=>{
+    console.log("Running")
+})
+```
+
+-----
+
+### TODOs:
+
+- Testing
+- Clean-up some of the string processing code
+- Support for dynamic URLs
+- Even simpler API and tighter code
+- Performance
+
+
+
+
+
+
 
 
