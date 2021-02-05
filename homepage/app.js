@@ -1,11 +1,10 @@
 let http = require("http")
 let fs = require("fs")
 let path = require("path")
-let appDir = path.dirname(require.main.filename)
+let appDir = path.dirname(require.main.filename)+ "/"
 let Stonk = require("./stonk.js")
-
-
-const l4 = "COMP4537/labs/4";
+const L4 = "/COMP4537/labs/4";
+const utils = require('./' + L4 + '/modules/utils');
 
 let stonk = new Stonk()
 
@@ -15,46 +14,42 @@ stonk.files(appDir)
 
 // routes
 stonk.get("/", (req, res) => {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write("Hello, world")
-    res.end()
+    stonk.serveFile(res, "index.html")
 })
 
 stonk.get("/ptest", (req, res) =>{
-    stonk.html("Hello, world!!", 200)
+    stonk.html("<h1>Hello, world!!</h1>", 200)
 })
+
+stonk.get(path.join(L4 + "/getDate"), (req, res) => {
+    try{
+        let name = stonk.query.name
+        stonk.html("Hello " + name + ", here is the server's current date and time: " + utils.getDate())
+    }catch(e){
+        console.log(e)
+        stonk.html("Invalid Request: You need to provide your name", 400)
+    }
+})
+
+stonk.get(path.join(L4 + "/writeFile"), (req, res) => {
+    try{
+        let content = stonk.query.text;
+        fs.appendFile('file.txt', content, function (err) {
+            if (err) throw err;
+            stonk.html("<h1>SAVED!</h1>", 200)
+            console.log("Saved!");
+        });
+    }
+    catch(e){
+        console.log(e)
+        stonk.html("Invalid Request: You need to provide content", 400)
+    }
+})
+
+
 
 // let it rip
 stonk.rip(4444, () => {
     console.log("my 2 cents")
 })
 
-
-
-
-
-// http.createServer((req, res) => {
-
-//     let url = req.url == "/" ? "/index.html" : req.url
-//     console.log(url)
-//     // switch(url){
-        
-//     //     case l4 + "/getDate":{
-
-//     //         break;
-//     //     }
-//     //     case l4 + "/writei"
-//     // }
-
-//     // if(url == l4 + "/getDate")
-
-//     fs.readFile(appDir + url, (err, dat) => {
-//         if (err){
-//             res.writeHead(404)
-//             res.end(JSON.stringify(err))
-//             return
-//         }
-//         res.writeHead(200)
-//         res.end(dat)
-//     })
-// }).listen(4040)
