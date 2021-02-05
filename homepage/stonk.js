@@ -43,8 +43,7 @@ class Stonk{
             let readStream = fs.createReadStream(filename);
             readStream.on('error', function(error) {
                 res.writeHead(404, {'Content-Type': 'text/html'});
-                let farr = file.split("/")
-                let f = farr[farr.length - 1]
+                let f = file.split("/")[file.split("/").length - 1]
                 res.write("<h2>404 - Not found : "+ f +"</h2>")
                 res.end()
             });
@@ -54,8 +53,6 @@ class Stonk{
     }
  
     async rip(port, f){
-        
-        // starting stuff
         for(let i in [3, 2, 1]){
             console.log(3-i+".......")
             await delay(1000);
@@ -63,10 +60,9 @@ class Stonk{
         console.log("LET IT RIP!!!!!!!")
         console.log("Stonk is now ripping on port: ", port)
         f()
-        // -----
         // create a base http server, and load the routes
         http.createServer((req, res)=>{
-             console.log(req.method, " :: ", req.url, " :: ", res.statusCode)
+            console.log(req.method, " :: ", req.url, " :: ", res.statusCode)
             let url = req.url
             this.req = req
             this.res = res
@@ -75,20 +71,16 @@ class Stonk{
             if(pathname.length > 1) if(pathname.endsWith("/")) pathname = pathname.slice(0, -1)
             this.query = urlLib.parse(req.url, true).query;
             if(req.method == 'GET'){
-                if(this.get_routes.hasOwnProperty(pathname)){
+                if(this.get_routes.hasOwnProperty(pathname))
                     this.get_routes[pathname]['f'](req, res)   
-                }
-                else{
+                else
                     this.serveFile(res, pathname)
-                }
             }
             else if(req.method == 'POST'){
-                if(this.post_routes.hasOwnProperty(pathname)){
+                if(this.post_routes.hasOwnProperty(pathname))
                     this.post_routes[pathname]['f'](req, res)   
-                }
-            }else{
+            }else
                 res.end()
-            }
             this.query = {}
           }).listen(port)
     }
