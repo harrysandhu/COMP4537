@@ -10,6 +10,7 @@
 let http = require("http")
 let fs = require("fs")
 let path = require("path")
+let urlLib = require('url');
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
@@ -40,16 +41,25 @@ class Stonk{
         this.appDir = appDir
     }
 
+    serveFile(file){
+        fs.readFile(this.appDir + "/" + file, (err, dat) => {
+            if (err){
+                this.res.writeHead(404)
+                this.res.end(JSON.stringify(err))
+                return
+            }
+            this.res.writeHead(200)
+            this.res.end(dat)
+        })
+    }
 
     async rip(port, f){
         
         // starting shit
-        console.log("3.......\n")
-        await delay(1000);
-        console.log("2.......\n")
-        await delay(1000);
-        console.log("1.......\n")
-        await delay(1000);
+        for(let i in [3, 2, 1]){
+            console.log(3-i+".......")
+            await delay(1000);
+        }
         console.log("LET IT RIP!!!!!!!")
         console.log("Stonk is now ripping on port: ", port)
         f()
@@ -64,6 +74,16 @@ class Stonk{
             if(req.method == 'GET'){
                 if(this.get_routes.hasOwnProperty(url)){
                     this.get_routes[url](req, res)   
+                }else{
+                    fs.readFile(this.appDir + url, (err, dat) => {
+                        if (err){
+                            this.res.writeHead(404)
+                            this.res.end(JSON.stringify(err))
+                            return
+                        }
+                        this.res.writeHead(200)
+                        this.res.end(dat)
+                    })
                 }
             }
             else if(req.method == 'POST'){
