@@ -1,6 +1,6 @@
 ## Stonk
 
-### S T O N K is a sub-100 routing library written on top of node.js.
+### S T O N K   is a sub-100 line routing library written on top of node.js.
 
 
 You like express?, You like php?, You will love Stonk.
