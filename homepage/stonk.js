@@ -42,7 +42,7 @@ class Stonk{
     }
 
     serveFile(file){
-        fs.readFile(this.appDir + "/" + file, (err, dat) => {
+        fs.readFile(this.appDir + file, (err, dat) => {
             if (err){
                 this.res.writeHead(404)
                 this.res.end(JSON.stringify(err))
@@ -75,15 +75,7 @@ class Stonk{
                 if(this.get_routes.hasOwnProperty(url)){
                     this.get_routes[url](req, res)   
                 }else{
-                    fs.readFile(this.appDir + url, (err, dat) => {
-                        if (err){
-                            this.res.writeHead(404)
-                            this.res.end(JSON.stringify(err))
-                            return
-                        }
-                        this.res.writeHead(200)
-                        this.res.end(dat)
-                    })
+                    this.serveFile(url)
                 }
             }
             else if(req.method == 'POST'){
