@@ -89,7 +89,7 @@ stonk.serveFile(res, "myFile.txt")
 
 ```javascript
 stonk.rip(PORT, ()=>{
-    console.log("Running")
+    console.log("Stonk is ripping now.")
 })
 ```
 
