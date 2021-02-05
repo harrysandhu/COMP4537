@@ -16,9 +16,6 @@ stonk.get("/", (req, res) => {
     stonk.serveFile(res, "index.html")
 })
 
-stonk.get("/ptest", (req, res) =>{
-    stonk.html("<h1>Hello, world!!</h1>", 200)
-})
 
 stonk.get(path.join(L4 + "/getDate"), (req, res) => {
     try{
