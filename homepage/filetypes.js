@@ -6,8 +6,8 @@ const filetypes = {
     'svg': "image/svg",
     'js': "application/javascript",
     'css': "text/css",
-    "json": "application/json"
-
+    "json": "application/json",
+    'txt': "text/plain"
 }
 
 module.exports = filetypes
