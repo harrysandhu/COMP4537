@@ -11,7 +11,6 @@ let stonk = new Stonk()
 // serve static content
 stonk.files(appDir)
 
-
 // routes
 stonk.get("/", (req, res) => {
     stonk.serveFile(res, "index.html")
@@ -46,10 +45,8 @@ stonk.get(path.join(L4 + "/writeFile"), (req, res) => {
     }
 })
 
-
-
 // let it rip
-stonk.rip(4444, () => {
+stonk.rip(4040, () => {
     console.log("my 2 cents")
 })
 
