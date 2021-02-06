@@ -29,7 +29,7 @@ stonk.get(path.join(L4 + "/getDate"), (req, res) => {
 
 stonk.get(path.join(L4 + "/writeFile"), (req, res) => {
     try{
-        let content = stonk.query.text;
+        let content = " " + stonk.query.text + " ";
         fs.appendFile('./COMP4537/labs/4/readFile/file.txt', content, function (err) {
             if (err) throw err;
             stonk.html("<h1>SAVED!</h1>", 200)
