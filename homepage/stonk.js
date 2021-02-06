@@ -47,9 +47,15 @@ class Stonk{
                 res.write("<h2>404 - Not found : "+ f +"</h2>")
                 res.end()
             });
+            try{
             let ft = file.split(".")[1]
+            console.log("DFFF", ft)
             res.writeHead(200, {'Content-Type': filetypes[ft]});
             readStream.pipe(res)
+            }catch(e){
+                res.writeHead(404, {'Content-Type': 'text/html'});
+                res.write("<h2>404</h2>")
+            }
     }
  
     async rip(port, f){
