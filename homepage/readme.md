@@ -1,7 +1,10 @@
 ## Stonk
 
-#### Only supports Linux and Mac (for now)
-### S T O N K   is a sub-100 line routing library written on top of node.js.
+----
+- Only supports Linux and Mac (for now)
+----
+
+### S T O N K ----- is a sub-100 line routing library written on top of Node.js.
 
 
 You like express?, You like php?, You will love Stonk.
