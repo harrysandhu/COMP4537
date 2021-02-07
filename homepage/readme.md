@@ -37,12 +37,12 @@ let stonk = new Stonk()
 ```javascript
   
   // GET
-   stonk.get("/endpoint, (req, res) => {        
+   stonk.get("/endpoint", (req, res) => {        
         let params = stonk.query   // stonk keeps track of the latest query params
    })
 
   // POST
-  stonk.post("/resource, (req, res) => {
+  stonk.post("/resource", (req, res) => {
         let data = stonk.data  
   })
 
