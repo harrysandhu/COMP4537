@@ -1,5 +1,6 @@
 ## Stonk
 
+#### Only supports Linux and Mac (for now)
 ### S T O N K   is a sub-100 line routing library written on top of node.js.
 
 
@@ -37,7 +38,7 @@ let stonk = new Stonk()
 ```javascript
   
   // GET
-   stonk.get("/endpoint", (req, res) => {        
+  stonk.get("/endpoint", (req, res) => {        
         let params = stonk.query   // stonk keeps track of the latest query params
    })
 
