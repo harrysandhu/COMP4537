@@ -48,7 +48,7 @@ stonk.get(path.join(L(4), "writeFile"), (req, res) => {
 })
 
 
-stonk.post(path.join(L(5), "readDB"), (req, res) => {
+stonk.get(path.join(L(5), "readDB"), (req, res) => {
     try{
         console.log("jel")
         let s = {
@@ -67,6 +67,7 @@ stonk.post(path.join(L(5), "readDB"), (req, res) => {
     }
 })
 
+// stonk.post(path.join(L(5), "writeDB", (r)
 
 
 // let it rip
