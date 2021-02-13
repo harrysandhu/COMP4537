@@ -10,6 +10,12 @@ let urlLib = require('url');
 let qs = require('querystring')
 const delay = ms => new Promise(res => setTimeout(res, ms));
 const filetypes = require("./filetypes.js")
+const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+    'Access-Control-Max-Age': 2592000, // 30 days
+    /** add other headers as per requirement */
+  };
 class Stonk{
     constructor(){
         this.get_routes = {}
@@ -30,12 +36,14 @@ class Stonk{
     }
 
     html(content, code){
-        this.res.writeHead(code, {'Content-Type': 'text/html'});
+        this.res.writeHead(code, {'Content-Type': 'text/html',    'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'});
         this.res.write(content)
         this.res.end()
     }
     json(content, code){
-        this.res.writeHead(code, {'Content-Type': 'application/json'});
+        this.res.writeHead(code, {'Content-Type': 'application/json',    'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'});
         this.res.write(content)
         this.res.end()
     }
@@ -48,7 +56,8 @@ class Stonk{
         let filename = path.join(this.appDir + file)
             let readStream = fs.createReadStream(filename);
             readStream.on('error', function(error) {
-                res.writeHead(404, {'Content-Type': 'text/html'});
+                res.writeHead(404, {'Content-Type': 'text/html',    'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'});
                 let f = file.split("/")[file.split("/").length - 1]
                 res.write("<h2>404 - Not found : "+ f +"</h2>")
                 res.end()
@@ -56,10 +65,12 @@ class Stonk{
             try{
             let ft = file.split(".")[1]
             console.log("DFFF", ft)
-            res.writeHead(200, {'Content-Type': filetypes[ft]});
+            res.writeHead(200, {'Content-Type': filetypes[ft],    'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'});
             readStream.pipe(res)
             }catch(e){
-                res.writeHead(404, {'Content-Type': 'text/html'});
+                res.writeHead(404, {'Content-Type': 'text/html',   'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'});
                 res.write("<h2>404</h2>")
             }
     }
