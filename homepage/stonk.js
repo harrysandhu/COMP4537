@@ -82,7 +82,20 @@ class Stonk{
             let pathname = urlLib.parse(req.url).pathname
             if(pathname.length > 1) if(pathname.endsWith("/")) pathname = pathname.slice(0, -1)
             this.query = urlLib.parse(req.url, true).query;
-            if(req.method == 'GET'){
+            const headers = {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+                'Access-Control-Max-Age': 2592000, // 30 days
+                /** add other headers as per requirement */
+              };
+            
+              if (req.method === 'OPTIONS') {
+                res.writeHead(204, headers);
+                res.end();
+                return;
+              }
+            
+            else if(req.method == 'GET'){
                 if(this.get_routes.hasOwnProperty(pathname))
                     this.get_routes[pathname]['f'](req, res)   
                 else
@@ -93,14 +106,14 @@ class Stonk{
                 if(this.post_routes.hasOwnProperty(pathname)){
                     console.log("yo", pathname)
                     this.post_routes[pathname]['f'](req, res)
-                    // let body = ''
-                    // req.on('data', (dat) =>{
-                    //     body += dat
-                    //     if (body.length > 1e6) req.connection.destroy()
-                    // })
-                    // req.on("end", () => {
-                    //     this.data = qs.parse(body)
-                    // })
+                    let body = ''
+                    req.on('data', (dat) =>{
+                        body += dat
+                        if (body.length > 1e6) req.connection.destroy()
+                    })
+                    req.on("end", () => {
+                        this.data = qs.parse(body)
+                    })
                 }
                 
             }else

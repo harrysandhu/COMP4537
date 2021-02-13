@@ -7,6 +7,7 @@ const L4 = "/COMP4537/labs/4";
 const utils = require('./' + L4 + '/modules/utils');
 const L = (n) => {return "/COMP4537/labs/" + String(n)}
 
+
 let stonk = new Stonk()
 
 // serve static content
@@ -67,7 +68,14 @@ stonk.get(path.join(L(5), "readDB"), (req, res) => {
     }
 })
 
-// stonk.post(path.join(L(5), "writeDB", (r)
+stonk.post(path.join(L(5), "writeDB"), (req, res) => {
+    try{
+        console.log(stonk.data)
+        
+    }catch(e){  
+        stonk.html("404", 400)
+    }
+})
 
 
 // let it rip
