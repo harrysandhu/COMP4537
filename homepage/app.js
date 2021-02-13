@@ -61,7 +61,7 @@ stonk.get(path.join(L(5), "readDB"), (req, res) => {
 
 stonk.get(path.join(L(5), "writeDB"), (req, res) => {
     try{
-        stonk.json({"message": "it worked!!"}, 200)
+        stonk.json(JSON.stringify({"message": "it worked!!"}), 200)
     }catch(e){  
         stonk.html("404", 400)
     }
