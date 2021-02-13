@@ -62,18 +62,14 @@ stonk.get(path.join(L(4), "writeFile"), (req, res) => {
 
 stonk.get(path.join(L(5), "readDB"), (req, res) => {
     try{
-        const s = {
-            0: {
-                name: "riri",
-                score:  420
-            },
-            1:{
-                name: "zz",
-                score: 88
-            }
-        }
-        
-        stonk.json(JSON.stringify(s), 200)
+
+        let sql = "SELECT * FROM score"
+        con.query(sql, function(err,  result, fields){
+            if (err) throw err;
+            stonk.json(JSON.stringify(result), 200)
+
+        })
+    
     }catch(e){
         stonk.html("400", 400)
     }
@@ -82,7 +78,11 @@ stonk.get(path.join(L(5), "readDB"), (req, res) => {
 stonk.get(path.join(L(5), "writeDB"), (req, res) => {
     try{
         let {name, score} = stonk.query
-        con.query()
+        let sql = "INSERT INTO score (name, score) VALUES ('"+name+"','"+score+"')"
+        con.query(sql, function(err,  result){
+            if (err) throw err;
+            console.log("record"+ JSON.stringify(result))
+        })
         stonk.json(JSON.stringify({"message": "it worked!!"}), 200)
     }catch(e){  
         stonk.html("404", 400)
