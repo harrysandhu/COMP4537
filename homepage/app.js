@@ -68,10 +68,10 @@ stonk.get(path.join(L(5), "readDB"), (req, res) => {
     }
 })
 
-stonk.post(path.join(L(5), "writeDB"), (req, res) => {
+stonk.get(path.join(L(5), "writeDB"), (req, res) => {
     try{
-        console.log(stonk.data)
-        
+        console.log(stonk.query)
+        stonk.json({"message": "it worked!!"}, 200)
     }catch(e){  
         stonk.html("404", 400)
     }
