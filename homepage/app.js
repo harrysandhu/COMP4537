@@ -6,6 +6,17 @@ let Stonk = require("./stonk.js")
 const L4 = "/COMP4537/labs/4";
 const utils = require('./' + L4 + '/modules/utils');
 const L = (n) => {return "/COMP4537/labs/" + String(n)}
+const mysql = require('mysql');
+
+const con = mysql.createConnection({
+  user: "harryx",
+  host: "db-mysql-nyc1-53815-do-user-1754324-0.b.db.ondigitalocean.com",
+  password: "iz1udqdoydn51yas",
+  port:25060,
+  insecureAuth : true,
+  database: "defaultdb"
+});
+
 
 
 let stonk = new Stonk()
@@ -51,7 +62,16 @@ stonk.get(path.join(L(4), "writeFile"), (req, res) => {
 
 stonk.get(path.join(L(5), "readDB"), (req, res) => {
     try{
-        console.log("jel")
+        const s = {
+            0: {
+                name: "riri",
+                score:  420
+            },
+            1:{
+                name: "zz",
+                score: 88
+            }
+        }
         
         stonk.json(JSON.stringify(s), 200)
     }catch(e){
@@ -61,6 +81,8 @@ stonk.get(path.join(L(5), "readDB"), (req, res) => {
 
 stonk.get(path.join(L(5), "writeDB"), (req, res) => {
     try{
+        let {name, score} = stonk.query
+        con.query()
         stonk.json(JSON.stringify({"message": "it worked!!"}), 200)
     }catch(e){  
         stonk.html("404", 400)
