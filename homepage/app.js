@@ -52,16 +52,7 @@ stonk.get(path.join(L(4), "writeFile"), (req, res) => {
 stonk.get(path.join(L(5), "readDB"), (req, res) => {
     try{
         console.log("jel")
-        let s = {
-            0: {
-                "name": "ABC",
-                "score": 42
-            },
-            1: {
-                "name": "XYZ",
-                "score": 99
-            } 
-        }
+        
         stonk.json(JSON.stringify(s), 200)
     }catch(e){
         stonk.html("400", 400)
@@ -70,7 +61,6 @@ stonk.get(path.join(L(5), "readDB"), (req, res) => {
 
 stonk.get(path.join(L(5), "writeDB"), (req, res) => {
     try{
-        console.log(stonk.query)
         stonk.json({"message": "it worked!!"}, 200)
     }catch(e){  
         stonk.html("404", 400)
