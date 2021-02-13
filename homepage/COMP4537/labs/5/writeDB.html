@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAB 5</title>
+</head>
+<body>
+    <h2>Enter Name and Score</h2>
+    <form onsubmit="sendInfo()">
+        <label for="name">Name:</label></br>
+        <input type="text" id="name" name="name" value="name"></br></br>
+        <label for="score">Score:</label></br>
+        <input type="text" id="score" name="score" value="9000"></br></br>
+        <input type="submit">
+    </form>
+
+    <script>
+        function sendInfo() {
+            const xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "https://truffen.com/COMP4537/labs/5/readDB.html", true);
+            let name = document.getElementById("name");
+            let score = documenent.getElementById("score");
+            xhttp.send(name, score);
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+                }
+            }
+        }
+    </script>
+
+
+</body>
+</html>
+
+   
+    
