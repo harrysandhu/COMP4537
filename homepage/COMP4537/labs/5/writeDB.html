@@ -18,7 +18,7 @@
     <script>
         function sendInfo() {
             const xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "https://truffen.com/COMP4537/labs/5/readDB.html", true);
+            xhttp.open("POST", "https://truffen.com/COMP4537/labs/5/readDB", true);
             let name = document.getElementById("name").value;
             let score = documenent.getElementById("score").value;
             xhttp.send(name, score);
