@@ -12,7 +12,6 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 const filetypes = require("./filetypes.js")
 const headers = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
     'Access-Control-Max-Age': 2592000, // 30 days
     /** add other headers as per requirement */
   };
@@ -36,14 +35,12 @@ class Stonk{
     }
 
     html(content, code){
-        this.res.writeHead(code, {'Content-Type': 'text/html',    'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'});
+        this.res.writeHead(code, {'Content-Type': 'text/html',    'Access-Control-Allow-Origin': '*'});
         this.res.write(content)
         this.res.end()
     }
     json(content, code){
-        this.res.writeHead(code, {'Content-Type': 'application/json',    'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'});
+        this.res.writeHead(code, {'Content-Type': 'application/json',    'Access-Control-Allow-Origin': '*'});
         this.res.write(content)
         this.res.end()
     }
@@ -93,12 +90,6 @@ class Stonk{
             let pathname = urlLib.parse(req.url).pathname
             if(pathname.length > 1) if(pathname.endsWith("/")) pathname = pathname.slice(0, -1)
             this.query = urlLib.parse(req.url, true).query;
-            const headers = {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
-                'Access-Control-Max-Age': 2592000, // 30 days
-                /** add other headers as per requirement */
-              };
             
               if (req.method === 'OPTIONS') {
                 res.writeHead(204, headers);
