@@ -7,6 +7,7 @@ let http = require("http")
 let fs = require("fs")
 let path = require("path")
 let urlLib = require('url');
+let qs = require('querystring')
 const delay = ms => new Promise(res => setTimeout(res, ms));
 const filetypes = require("./filetypes.js")
 class Stonk{
@@ -17,6 +18,7 @@ class Stonk{
         this.req = {}
         this.appDir = "/"
         this.query = {}
+        this.data = {}
     }
     get(url, f){
         let params = url.split("/:").slice(1)
@@ -24,12 +26,16 @@ class Stonk{
     }
 
     post(url, f){
-        let params = url.split("/:").slice(1)
-        this.get_routes[url.split("/:")[0]] = {'f': f, '_p': params}
+        this.post_routes[url.split("/:")[0]] = {'f': f, '_d': {}}
     }
 
     html(content, code){
         this.res.writeHead(code, {'Content-Type': 'text/html'});
+        this.res.write(content)
+        this.res.end()
+    }
+    json(content, code){
+        this.res.writeHead(code, {'Content-Type': 'application/json'});
         this.res.write(content)
         this.res.end()
     }
@@ -83,8 +89,20 @@ class Stonk{
                     this.serveFile(res, pathname)
             }
             else if(req.method == 'POST'){
-                if(this.post_routes.hasOwnProperty(pathname))
-                    this.post_routes[pathname]['f'](req, res)   
+                console.log("yo", this.post_routes)
+                if(this.post_routes.hasOwnProperty(pathname)){
+                    console.log("yo", pathname)
+                    this.post_routes[pathname]['f'](req, res)
+                    // let body = ''
+                    // req.on('data', (dat) =>{
+                    //     body += dat
+                    //     if (body.length > 1e6) req.connection.destroy()
+                    // })
+                    // req.on("end", () => {
+                    //     this.data = qs.parse(body)
+                    // })
+                }
+                
             }else
                 res.end()
             this.query = {}

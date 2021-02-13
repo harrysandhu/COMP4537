@@ -5,6 +5,7 @@ let appDir = path.dirname(require.main.filename)+ "/"
 let Stonk = require("./stonk.js")
 const L4 = "/COMP4537/labs/4";
 const utils = require('./' + L4 + '/modules/utils');
+const L = (n) => {return "/COMP4537/labs/" + String(n)}
 
 let stonk = new Stonk()
 
@@ -17,17 +18,18 @@ stonk.get("/", (req, res) => {
 })
 
 
-stonk.get(path.join(L4 + "/getDate"), (req, res) => {
+stonk.get(path.join(L(4), "getDate"), (req, res) => {
     try{
         let name = stonk.query.name
-        stonk.html("Hello " + name + ", here is the server's current date and time: " + utils.getDate(), 200)
+        stonk.html("Hello " + name + ", here is the server's current date and \
+                    time: " + utils.getDate(), 200)
     }catch(e){
         console.log(e)
         stonk.html("Invalid Request: You need to provide your name", 400)
     }
 })
 
-stonk.get(path.join(L4 + "/writeFile"), (req, res) => {
+stonk.get(path.join(L(4), "writeFile"), (req, res) => {
     try{
         let content = " " + stonk.query.text + " ";
         if(stonk.query.text == "undefined" || stonk.query.text.length == 0){
@@ -44,6 +46,28 @@ stonk.get(path.join(L4 + "/writeFile"), (req, res) => {
         stonk.html("Invalid Request: You need to provide content", 400)
     }
 })
+
+
+stonk.post(path.join(L(5), "readDB"), (req, res) => {
+    try{
+        console.log("jel")
+        let s = {
+            0: {
+                "name": "ABC",
+                "score": 42
+            },
+            1: {
+                "name": "XYZ",
+                "score": 99
+            } 
+        }
+        stonk.json(JSON.stringify(s), 200)
+    }catch(e){
+        stonk.html("400", 400)
+    }
+})
+
+
 
 // let it rip
 stonk.rip(4040, () => {
