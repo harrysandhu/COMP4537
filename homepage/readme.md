@@ -14,7 +14,7 @@ Stonk's Philosophy: "Let it rip or die a virgin 🌪
 ### Docs
 
 * Stonk currently supports 2 request methods, GET and POST.
-
+* Now supports CORS
 
 #### Import and initialize
 
