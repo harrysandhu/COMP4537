@@ -109,12 +109,15 @@ class Stonk{
                     console.log("yo", pathname)
                     this.post_routes[pathname]['f'](req, res)
                     let body = ''
+                    let that = this
                     req.on('data', (dat) =>{
+                        console.log(dat)
                         body += dat
                         if (body.length > 1e6) req.connection.destroy()
                     })
                     req.on("end", () => {
-                        this.data = qs.parse(body)
+                        console.log(body)
+                        that.data = JSON.parse(body)
                     })
                 }
                 
