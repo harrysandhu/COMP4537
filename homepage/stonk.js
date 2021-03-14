@@ -107,7 +107,6 @@ class Stonk{
                 console.log("yo", this.post_routes)
                 if(this.post_routes.hasOwnProperty(pathname)){
                     console.log("yo", pathname)
-                    this.post_routes[pathname]['f'](req, res)
                     let body = ''
                     let that = this
                     req.on('data', (dat) =>{
@@ -118,7 +117,9 @@ class Stonk{
                     req.on("end", () => {
                         console.log(body)
                         that.data = JSON.parse(body)
+                        this.post_routes[pathname]['f'](req, res)
                     })
+                    
                 }
                 
             }else
