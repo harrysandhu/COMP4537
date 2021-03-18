@@ -139,7 +139,13 @@ stonk.post(path.join(L(6), "question"), (req, res) => {
                         }
             })  
             }else{
-                throw 'error: duplicate question 2'
+                let xsql = "UPDATE questions SET question = ? WHERE id = ?";
+                con.query(xsql, [question["question"], question.id]  , (err, result) =>{
+                    if (err) throw "err3"
+                    xsql = "UPDATE options SET answer = ?, isCorrect = ? WHERE question = ?"
+                    
+                })
+                stonk.json(JSON.stringify({"error": e}), 400)
             }
             
         })
@@ -147,6 +153,34 @@ stonk.post(path.join(L(6), "question"), (req, res) => {
     }catch(e){
         stonk.json(JSON.stringify({"error": e}), 400)
     }
+})
+
+
+stonk.get(path.join(L(6), "questions"), (req, res) => {
+    let sql = "SELECT * FROM options JOIN questions ON questions.id = options.questionID"
+    con.query(sql, function(err,  result){
+        if (err) throw 'error2';
+        console.log("RESULT QUES", result)
+        let res = JSON.parse(JSON.stringify(result))
+        console.log(res)
+        let data = {}
+        let i = 0
+        while(i < res.length){
+            let cid = res[i]['questionID']
+            data[cid] = {"id": cid, 
+                        "question": res[i]["question"], 
+                        "options":[], 
+                        "answer": ""}
+            for(let j = 0; j < 4; j++){
+                data[cid]["options"].push(res[i+j]["answer"])
+                if(res[i+j]["isCorrect"]["data"][0] == 1){
+                    data[cid]["answer"] = res[i+j]["answer"]
+                } 
+            }
+            i += 4
+        }
+        stonk.json(JSON.stringify({"result": data}), 200)
+    })
 })
 
 // let it rip
