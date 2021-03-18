@@ -1,15 +1,19 @@
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
-  user: "doadmin",
+  user: "harryx",
   host: "db-mysql-nyc1-53815-do-user-1754324-0.b.db.ondigitalocean.com",
-  password: "x4eggesk315ahf8c",
+  password: "iz1udqdoydn51yas",
   port:25060,
   insecureAuth : true,
-  database: "defaultdb"
+  database: "quiz"
 });
 
 con.connect(function(err) {
   if (err) throw err;
-  console.log("Connected!");
+  con.query("Select now()",  function (err, result, fields) {
+    if (result) console.log(result)
+    if (err) throw err;
+    console.log(err);
+  });
 });

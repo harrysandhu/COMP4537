@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZ 1</title>
+      <link rel="stylesheet" href="./css/style.css">
+   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/helper.js"></script>
+    <script src="./js/Answer.js"></script>
+     <script src="./js/user.js"></script>
+    <script src="./js/AnswerManager.js"></script>
+</head>
+<body>
+      <div class="container vertical-flex">
+      
+        <h3>Quiz</h>
+        <h5 id="score"></h5>
+        <div class="container questions_container">
+             <template id="new-question">
+        <div class="container">
+            <h3 class="title"></h3>
+            <textarea class="box" disabled="disabled"></textarea>
+            <br/>
+            <input type="radio" name="" class="radio-0" value="" checked/>
+            <span class="input-0" name=""></span>
+            <br/>
+            <input type="radio" name="" class="radio-1" value="" />
+            <span class="input-1" name=""></span>
+            <br/>
+            <input type="radio" name="" class="radio-2"  value="" />
+            <span class="input-2" name=""></span>
+            <br/>
+            <input type="radio" name="" class="radio-3" value="" />
+            <span class="input-3" name="" ></span>
+            <br/>
+            <br/>
+        </div>
+    </template>
+
+        </div>
+      </div>
+      <a href="index.html"> Back</a>
+    <button id="submit-answers">Submit Answers<button>
+</body>
+</html>
