@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sarah Esla</title>
+    <!-- Bootstrap -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+   <script src="./js/QuestionManager.js"></script>
+    <script src="./js/question.js"></script>
+    <script src="./js/helper.js"></script>
+     <script src="./js/admin.js"></script>
+    
+</head>
+<body>
+
+    <h1>Add Some Questions</h1>
+       <a href="index.html"> Back</a>
+    <button id="add-question">Add Question</button>
+    <br><br>
+
+
+    <template id="new-question">
+        <div class="container">
+            <h3 class="title"></h3>
+            <textarea class="box"></textarea>
+            <br/>
+            <input type="radio" name="" class="radio-0" value="" checked/>
+            <input type="text" class="input-0" />
+            <br/>
+            <input type="radio" name="" class="radio-1" value="" />
+            <input type="text" class="input-1" />
+            <br/>
+            <input type="radio" name="" class="radio-2"  value="" />
+            <input type="text" class="input-2" />
+            <br/>
+            <input type="radio" name="" class="radio-3" value="" />
+            <input type="text" class="input-3" />
+            <br/>
+             <button class="submit">Save Question</button>
+             <button class="delete">Delete</button>
+        </div>
+    </template>
+
+
+</body>
+</html>
