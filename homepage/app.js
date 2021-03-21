@@ -20,10 +20,12 @@ const con = mysql.createConnection({
 
 
 const dbConnection = mysql.createConnection({
-  host: "s11.fcomet.com",
   user: "harryx",
-  password: "thisisapassword",
-  database: "sarahesl_isa-quiz"
+  host: "db-mysql-nyc1-53815-do-user-1754324-0.b.db.ondigitalocean.com",
+  password: "iz1udqdoydn51yas",
+  port:25060,
+  insecureAuth : true,
+  database: "sarahdb"
 });
 
 
