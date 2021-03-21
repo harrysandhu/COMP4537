@@ -139,13 +139,7 @@ stonk.post(path.join(L(6), "question"), (req, res) => {
                         }
             })  
             }else{
-                let xsql = "UPDATE questions SET question = ? WHERE id = ?";
-                con.query(xsql, [question["question"], question.id]  , (err, result) =>{
-                    if (err) throw "err3"
-                    xsql = "UPDATE options SET answer = ?, isCorrect = ? WHERE question = ?"
-                    
-                })
-                stonk.json(JSON.stringify({"error": e}), 400)
+               stonk.json(JSON.stringify({"message": "it worked!!"}), 200)
             }
             
         })
