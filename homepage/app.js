@@ -17,9 +17,11 @@ const con = mysql.createConnection({
   database: "quiz"
 });
 
+
+
 const dbConnection = mysql.createConnection({
   host: "s11.fcomet.com",
-  user: "sarahesl_admin",
+  user: "harryx",
   password: "thisisapassword",
   database: "sarahesl_isa-quiz"
 });
