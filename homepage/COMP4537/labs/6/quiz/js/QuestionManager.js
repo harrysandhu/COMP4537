@@ -1,5 +1,6 @@
+// let BASE_URL = "http://localhost:4040/COMP4537/labs/6" 
 
-let BASE_URL = "http://localhost:4040/COMP4537/labs/6" 
+let BASE_URL = "https://truffen.com/COMP4537/labs/6"
 
 class QuestionManager{
     constructor(){
