@@ -32,10 +32,11 @@ api.post("/admin/register", async(req, res) => {
 
         //validate, create, and register admin using db
         let result = await Admin.create({email, password, repeat_password}, db)
-
+        if(result.get().isError){throw result}
+        console.log(result)
         //if error result will be thrown as an error
         // by default, its a success.
-        return res.status(200).json(result.get())
+        return res.status(200).json(result)
         
     }catch(e){
         if("get" in e){
@@ -46,7 +47,11 @@ api.post("/admin/register", async(req, res) => {
     }
 })
 
-// api.post("/admin/")
+// api.post("/admin/login", async(req, res) =>{
+//     try{
+
+//     }catch(e)
+// })
 
 
 api.get("/test", async (req, res) =>{

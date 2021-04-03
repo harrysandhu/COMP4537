@@ -8,7 +8,8 @@ const Joi = require('joi')
 
 
 export default class Admin{
-    static schema = Joi.object({
+    static schema(){
+        return Joi.object({
         email:  Joi.string()
         .email({ minDomainSegments: 2 })
         .required(),
@@ -21,21 +22,26 @@ export default class Admin{
 
         repeat_password: Joi.ref('password'),
     
-    }).with("email")
-    .with("password", "repeat_password")
+    }).with("password", "repeat_password")
+}
 
     static async create(admin, db){
         try{
-            let value = await Admin.schema.validateAsync(admin)
+            let value = await Admin.schema().validateAsync(admin)
             admin.admin_id = Helper.genId()
             let salt = crypto.randomBytes(20).toString('hex');
-            let password_hash = sha256.hmac(salt, password); 
+            let password_hash = sha256.hmac(salt, admin.password); 
             let insert_result = await db.insert("admin", 
                                                 ["admin_id", "email", "password_hash", "salt"], 
                                                 [admin.admin_id, admin.email, password_hash, salt])
-            return insert_result
+            return Result.Success(insert_result)
         }catch(e){
-            return Result.Error(e)
+            console.log("WE HERE")
+            if("details" in e){
+                e = e.details[0]
+                e.code = "JOI"
+            }    
+            throw Result.Error(e)
         }
     }
 
