@@ -13,7 +13,7 @@ let CONFIG = {
     password: "iz1udqdoydn51yas",
     port:25060,
     insecureAuth : true,
-    database: "quiz"
+    database: "tproj"
 }
 
 /**Admin Resource
@@ -46,7 +46,7 @@ api.post("/admin/register", async(req, res) => {
     }
 })
 
-api.post("/admin/")
+// api.post("/admin/")
 
 
 api.get("/test", async (req, res) =>{
