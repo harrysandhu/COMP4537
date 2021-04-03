@@ -47,11 +47,20 @@ api.post("/admin/register", async(req, res) => {
     }
 })
 
-// api.post("/admin/login", async(req, res) =>{
-//     try{
-
-//     }catch(e)
-// })
+api.post("/admin/login", async(req, res) =>{
+    try{
+        let {email, password} = req.body
+        let db = new DBManager(CONFIG)
+        let result = await Admin.login({email, password}, db)
+        return res.status(200).json(result)
+    }catch(e){
+        if("get" in e){
+            return res.status(400).json({error: e.get()})    
+        }
+        console.log(e)
+        return res.status(400).json({error: "Invalid Request."})
+    }
+})
 
 
 api.get("/test", async (req, res) =>{
