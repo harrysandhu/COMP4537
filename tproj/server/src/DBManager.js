@@ -30,6 +30,26 @@ export default class DBManager{
         })
     }
 
+    async select(table, columns, values){
+        return new Promise((resolve, reject) => {
+            try{
+                this.con.connect()
+                let sql = "SELECT ?? FROM ?? WHERE ?"
+                sql = mysql.format(sql, [columns, table, values])
+                this.con.query(sql, (error, results, fields) =>{
+                    if (error) reject(error)
+                    else{
+                        resolve(JSON.parse(JSON.stringify(results)))
+                    }
+                })
+
+            }catch(e){
+                reject("Database error: cannot register admin")
+            }finally{
+                this.con.end()
+            }  
+        })
+    }
 
 }
 
