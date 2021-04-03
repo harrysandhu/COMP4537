@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS admin(
+    admin_id VARCHAR (100) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(511) NOT NULL,
+    salt VARCHAR(40) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(admin_id)
+);
