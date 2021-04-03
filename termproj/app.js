@@ -11,7 +11,7 @@ let server = require("http").Server(app)
 let io = require("socket.io")(server)
 
 // api routes
-import api from "./api/v1/api.js"
+let api = require("./api/v1/api")
 
 // middleware
 app.use(cors())
