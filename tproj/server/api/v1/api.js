@@ -6,7 +6,7 @@ import Admin from '../../src/Admin'
 import DBManager from '../../src/DBManager'
 import { verify } from 'crypto'
 import Helper from '../../src/Helper'
-
+let path = require("path")
 let api = express.Router()
 let privateKey = fs.readFileSync("./src/security/private.key", "utf8");
 let publicKey = fs.readFileSync("./src/security/public.key", "utf8");
@@ -19,6 +19,13 @@ let CONFIG = {
     insecureAuth : true,
     database: "tproj"
 }
+
+api.use(express.static(__dirname))
+
+//serve documentation
+// api.get("/documentation.html", async(req, res) => {
+//     res.sendFile(path.join(__dirname + "/documentation.html"))
+// })
 
 /**Admin Resource
  * Endpoints:
@@ -82,7 +89,7 @@ api.get("/admin", Helper.verifyAuthToken, async(req, res)=>{
 
 api.get("/user", 
     async (req, res, next) =>{
-        Helper.verifyRequest(req, res, next, new DBManager(CONFIG))
+        await Helper.verifyRequest(req, res, next, new DBManager(CONFIG))
     },
     Helper.verifyAuthToken,
     async (req, res) =>{
@@ -104,6 +111,7 @@ api.get("/user",
 api.get("/ledger/:id", 
     async (req, res) =>{
         try{
+            req.url = "/ledger/:id"
             console.log("url: ", req.url)
             let ledger = "sample ledger"
             // get user data and merge it into user object
