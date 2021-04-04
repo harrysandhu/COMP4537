@@ -63,7 +63,11 @@ export default class Helper{
             if(user.length == 0){
                 throw {message: "Unauthorized"}
             }
-			let insert_result = await db.insert("api_request", ["admin_id", "endpoint"], [requestToken, req.url])
+			let url = req.url
+			if(url.endsWith("/") && url != "/"){
+				url = url.substring(0, url.length - 1)
+			}
+			let insert_result = await db.insert("api_request", ["admin_id", "endpoint"], [requestToken, url])
 			//next middleware
 			next()
 		}catch(e){
