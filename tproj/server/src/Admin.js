@@ -3,17 +3,18 @@ import Result from './Result'
 let crypto = require('crypto')
 let sha256 = require('js-sha256')
 let fs = require("fs");
-// let privateKey = fs.readFileSync("./src/core/security/private.key", "utf8");
-// let publicKey = fs.readFileSync("./src/core/security/public.key", "utf8");
-
+let privateKey = fs.readFileSync("./src/security/private.key", "utf8");
+let publicKey = fs.readFileSync("./src/security/public.key", "utf8");
+let jwt = require("jsonwebtoken")
 const Joi = require('joi')
 
 
 export default class Admin{
     static schemaLogin(){
         return Joi.object({
-            email:  Joi.string()
-            .email({ minDomainSegments: 2 })
+            username:  Joi.string()
+            .min(3)
+            .max(30)
             .required(),
 
             password: Joi.string()
@@ -36,8 +37,8 @@ export default class Admin{
             let salt = crypto.randomBytes(20).toString('hex');
             let password_hash = sha256.hmac(salt, admin.password); 
             let insert_result = await db.insert("admin", 
-                                                ["admin_id", "email", "password_hash", "salt"], 
-                                                [admin.admin_id, admin.email, password_hash, salt])
+                                                ["admin_id", "username", "password_hash", "salt"], 
+                                                [admin.admin_id, admin.username, password_hash, salt])
             return Result.Success(insert_result)
         }catch(e){
             console.log("WE HERE")
@@ -53,16 +54,19 @@ export default class Admin{
     static async login(data, db){
         try{
             let value = await Admin.schemaLogin().validateAsync(data)
-            let user = await db.select("admin", "*", {"email": data.email})
+            let user = await db.select("admin", "*", {"username": data.username})
             if(user.length == 0){
-                throw {message: "User with this email doesn\'t exist."}
+                throw {message: "Incorrect username/password. Please try again."}
             }
             user = user[0]
             let password_hash = sha256.hmac(user.salt, data.password);
             if(password_hash != user.password_hash){
-                throw {message: "Incorrect email/password. Please try again."}
+                throw {message: "Incorrect username/password. Please try again."}
             }
-            return Result.Success(user)
+            let payload = user
+            let signOptions = {subject: payload.admin_id, algorithm: "RS256"}
+            let authToken = jwt.sign(payload, privateKey, signOptions)
+            return Result.Success({authToken})
         }catch(e){
             console.log("WE HERE")
             console.log(e)
