@@ -7,12 +7,12 @@ let mysql = require("mysql")
 export default class DBManager{
     constructor(config){
         this.con = mysql.createConnection(config)
+        this.con.connect()
     }
     
     async insert(table, columns, values){
         return new Promise((resolve, reject) => {
             try{
-                this.con.connect()
                 let sql = "INSERT INTO ?? (??) VALUES (?)"
                 sql = mysql.format(sql, [table, columns, values])
                 this.con.query(sql, (error, results, fields) =>{
@@ -25,7 +25,7 @@ export default class DBManager{
             }catch(e){
                 reject("Database error: cannot register admin")
             }finally{
-                this.con.end()
+                // this.con.end()
             }  
         })
     }
@@ -33,7 +33,6 @@ export default class DBManager{
     async select(table, columns, values){
         return new Promise((resolve, reject) => {
             try{
-                this.con.connect()
                 let sql = "SELECT ?? FROM ?? WHERE ?"
                 sql = mysql.format(sql, [columns, table, values])
                 this.con.query(sql, (error, results, fields) =>{
@@ -46,7 +45,7 @@ export default class DBManager{
             }catch(e){
                 reject("Database error: cannot register admin")
             }finally{
-                this.con.end()
+                // this.con.end()
             }  
         })
     }
