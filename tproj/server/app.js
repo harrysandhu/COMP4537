@@ -26,6 +26,7 @@ app.get("/admin", (req, res) =>{
 })
 
 
+
 // register api routes on app
 app.use("/api/v1", api)
 
@@ -35,5 +36,7 @@ app.use("/api/v1", api)
 server.listen(PORT, async () => {
     console.log("listening on port: ", PORT)
 })
+
+
 
 
