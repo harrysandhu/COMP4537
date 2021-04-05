@@ -57,11 +57,11 @@ export default class Helper{
 		const requestToken = req.headers["api_token"]
 		try{
 			if (typeof requestToken === "undefined") {
-				throw {message: "Unauthorized"}
+				throw {message: "Unauthorized1"}
 			}
 			let user = await db.select("admin", "admin_id", {"admin_id": requestToken})
 			if(user.length == 0){
-				throw {message: "Unauthorized"}
+				throw {message: "Unauthorized2"}
 			}
 			let url = req.url
 			if(url.endsWith("/") && url != "/"){
