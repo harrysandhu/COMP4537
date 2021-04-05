@@ -54,7 +54,7 @@ export default class Helper{
 	
 	// middleware function
 	static async verifyRequest(req, res, next, db){
-		const requestToken = req.headers["api_token"]
+		const requestToken = req.headers["x-api-key"];
 		console.log("REQUEST TOKEN: " ,requestToken)
 		try{
 			if (typeof requestToken === "undefined") {
