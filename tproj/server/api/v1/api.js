@@ -87,6 +87,7 @@ api.get("/admin", Helper.verifyAuthToken, async(req, res)=>{
 
 api.get("/user", 
 async (req, res, next) =>{
+    console.log("THEM HEADERS: ", req.headers)
     await Helper.verifyRequest(req, res, next, new DBManager(CONFIG))
 },
 Helper.verifyAuthToken,
