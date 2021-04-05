@@ -1,4 +1,5 @@
-let BASE_URL = "http://localhost:4040/api/v1"
+// let BASE_URL = "http://localhost:4040/op/api/v1"
+let BASE_URL = "https://truffen.com/op/api/v1"
 
 class Admin{
     static async verifyLogin(){
