@@ -10,6 +10,7 @@
   "dependencies": {
     "@babel/cli": "^7.13.14",
     "@babel/core": "^7.13.14",
+    "anymatch": "^3.1.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@babel/node": "^7.13.13",
-    "@babel/preset-env": "^7.13.12"
+    "@babel/preset-env": "^7.13.12",
+    "http-proxy-middleware": "^1.1.0"
   }
 }
