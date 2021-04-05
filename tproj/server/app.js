@@ -28,7 +28,7 @@ app.get("/admin", (req, res) =>{
 
 
 // register api routes on app
-app.use("/api/v1", api)
+app.use("/op/api/v1", api)
 
 
 
