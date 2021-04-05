@@ -1,9 +1,9 @@
 import Result from "./Result";
 let mysql = require("mysql")
 /**
- * DBManager provides an interface for all use cases.
- * 
- */
+* DBManager provides an interface for all use cases.
+* 
+*/
 export default class DBManager{
     constructor(config){
         this.con = mysql.createConnection(config)
@@ -21,7 +21,7 @@ export default class DBManager{
                         resolve(results)
                     }
                 })
-
+                
             }catch(e){
                 reject("Database error: cannot register admin")
             }finally{
@@ -29,7 +29,7 @@ export default class DBManager{
             }  
         })
     }
-
+    
     async select(table, columns, values){
         return new Promise((resolve, reject) => {
             try{
@@ -41,7 +41,7 @@ export default class DBManager{
                         resolve(JSON.parse(JSON.stringify(results)))
                     }
                 })
-
+                
             }catch(e){
                 reject("Database error: cannot register admin")
             }finally{
@@ -49,6 +49,6 @@ export default class DBManager{
             }  
         })
     }
-
+    
 }
 

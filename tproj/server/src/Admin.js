@@ -16,20 +16,20 @@ export default class Admin{
             .min(3)
             .max(30)
             .required(),
-
+            
             password: Joi.string()
             .min(3)
             .max(30)
             .required()
         })
     }
-
+    
     static schema(){
         return Admin.schemaLogin().keys({
             repeat_password: Joi.ref('password')
         }).with("password", "repeat_password")
     }
-
+    
     static async create(admin, db){
         try{
             let value = await Admin.schema().validateAsync(admin)
@@ -37,8 +37,8 @@ export default class Admin{
             let salt = crypto.randomBytes(20).toString('hex');
             let password_hash = sha256.hmac(salt, admin.password); 
             let insert_result = await db.insert("admin", 
-                                                ["admin_id", "username", "password_hash", "salt"], 
-                                                [admin.admin_id, admin.username, password_hash, salt])
+            ["admin_id", "username", "password_hash", "salt"], 
+            [admin.admin_id, admin.username, password_hash, salt])
             return Result.Success(insert_result)
         }catch(e){
             console.log("WE HERE")
@@ -50,7 +50,7 @@ export default class Admin{
             throw Result.Error(e)
         }
     }
-
+    
     static async login(data, db){
         try{
             let value = await Admin.schemaLogin().validateAsync(data)
@@ -77,6 +77,6 @@ export default class Admin{
             throw Result.Error(e)
         }
     }
-
-
+    
+    
 }
