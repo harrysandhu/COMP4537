@@ -2,6 +2,7 @@ import express from "express"
 import morgan from "morgan"
 import bodyParser from "body-parser"
 import cors from "cors"
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 let app = express()
 const PORT = 4040
@@ -14,6 +15,7 @@ let api = require("./api/v1/api")
 
 // middleware
 app.use(cors())
+
 app.use(morgan("tiny"))
 app.use(express.static("private"))
 app.use(bodyParser.json({limit: '5mb'}))
@@ -25,6 +27,8 @@ app.get("/admin", (req, res) =>{
     res.status(200).json({"name": "harry"})
 })
 
+
+app.use('/op/api/v1', createProxyMiddleware({ target: 'https://truffen.com', changeOrigin: true }));
 
 
 // register api routes on app
