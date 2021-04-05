@@ -22,17 +22,12 @@ let CONFIG = {
 
 api.use(express.static(__dirname))
 
-//serve documentation
-// api.get("/documentation.html", async(req, res) => {
-//     res.sendFile(path.join(__dirname + "/documentation.html"))
-// })
-
 /**Admin Resource
- * Endpoints:
- * 1. POST /admin/register
- * 2. POST /admin/login
- * 3. GET /admin
- */
+* Endpoints:
+* 1. POST /admin/register
+* 2. POST /admin/login
+* 3. GET /admin
+*/
 api.post("/admin/register", async(req, res) => {
     try{
         // validate the request
@@ -40,7 +35,7 @@ api.post("/admin/register", async(req, res) => {
         
         //create a DBManager instance (dependecy injection)
         let db = new DBManager(CONFIG)
-
+        
         //validate, create, and register admin using db
         let result = await Admin.create({username, password, repeat_password}, db)
         if(result.get().isError){throw result}
@@ -77,7 +72,10 @@ api.get("/admin", Helper.verifyAuthToken, async(req, res)=>{
     try{
         let currentUser = await Helper.jwtVerifyUser(req.token, publicKey)
         // get user data and merge it into user object
-        return res.json(currentUser)
+        let db = new DBManager(CONFIG)
+        let api_data = await Admin.fetch_endpoint_data(currentUser.admin_id, db)
+        console.log("api_data", api_data.get())
+        return res.json({...currentUser, "api_data":api_data.get()})
     }catch(e){
         if("get" in e){
             return res.status(400).json({error: e.get()})    
@@ -88,43 +86,52 @@ api.get("/admin", Helper.verifyAuthToken, async(req, res)=>{
 })
 
 api.get("/user", 
-    async (req, res, next) =>{
-        await Helper.verifyRequest(req, res, next, new DBManager(CONFIG))
-    },
-    Helper.verifyAuthToken,
-    async (req, res) =>{
-        try{
-            let currentUser = "sample user"
-            // get user data -> ledgers and shit and merge it into user object
-            return res.json({user: currentUser, ledger: [1, 2, 3, 4]})
-        }catch(e){
-            if("get" in e){
-                return res.status(400).json({error: e.get()})    
-            }
-            console.log(e)
-            return res.status(400).json({error: "Invalid Request."})
+async (req, res, next) =>{
+    await Helper.verifyRequest(req, res, next, new DBManager(CONFIG))
+},
+Helper.verifyAuthToken,
+async (req, res) =>{
+    try{
+        console.log(req.method)
+        let currentUser = "sample user"
+        // get user data -> ledgers and shit and merge it into user object
+        return res.json({user: currentUser, ledger: [1, 2, 3, 4]})
+    }catch(e){
+        if("get" in e){
+            return res.status(400).json({error: e.get()})    
         }
+        console.log(e)
+        return res.status(400).json({error: "Invalid Request."})
     }
+}
 )
 
 
 api.get("/ledger/:id", 
-    async (req, res) =>{
-        try{
-            req.url = "/ledger/:id"
-            console.log("url: ", req.url)
-            let ledger = "sample ledger"
-            // get user data and merge it into user object
-            return res.json({ledger})
-        }catch(e){
-            if("get" in e){
-                return res.status(400).json({error: e.get()})    
-            }
-            console.log(e)
-            return res.status(400).json({error: "Invalid Request."})
+async (req, res, next) =>{
+    let r = req
+    r.url = "/ledger/:id"
+    await Helper.verifyRequest(r, res, next, new DBManager(CONFIG))
+},
+Helper.verifyAuthToken,
+async (req, res) =>{
+    try{
+        let ledger = "sample ledger"
+        // get user data and merge it into user object
+        return res.json({ledger})
+    }catch(e){
+        if("get" in e){
+            return res.status(400).json({error: e.get()})    
         }
+        console.log(e)
+        return res.status(400).json({error: "Invalid Request."})
     }
+}
 )
+
+
+
+
 
 
 
