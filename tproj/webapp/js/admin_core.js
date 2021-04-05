@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", async (event)=>{
             }
         }
     }catch(e){
+        window.location.href = "auth.html"
         console.log(e)
         // window.location.href = "auth.html"
     }
