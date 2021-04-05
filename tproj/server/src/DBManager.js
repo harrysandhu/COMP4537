@@ -43,7 +43,27 @@ export default class DBManager{
                 })
                 
             }catch(e){
-                reject("Database error: cannot register admin")
+                reject("Database error: cannot fetch data")
+            }finally{
+                // this.con.end()
+            }  
+        })
+    }
+
+    async select_grouped(table, columns, values, group){
+        return new Promise((resolve, reject) => {
+            try{
+                let sql = "SELECT ??, COUNT(*) as count FROM ?? WHERE ? GROUP BY ??"
+                sql = mysql.format(sql, [columns, table, values, group])
+                this.con.query(sql, (error, results, fields) =>{
+                    if (error) reject(error)
+                    else{
+                        resolve(JSON.parse(JSON.stringify(results)))
+                    }
+                })
+                
+            }catch(e){
+                reject("Database error: cannot fetch grouped data")
             }finally{
                 // this.con.end()
             }  
