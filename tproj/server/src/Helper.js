@@ -55,6 +55,7 @@ export default class Helper{
 	// middleware function
 	static async verifyRequest(req, res, next, db){
 		const requestToken = req.headers["api_token"]
+		console.log("REQUEST TOKEN: " ,requestToken)
 		try{
 			if (typeof requestToken === "undefined") {
 				throw {message: "Unauthorized1"}
