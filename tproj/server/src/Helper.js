@@ -67,7 +67,7 @@ export default class Helper{
 			if(url.endsWith("/") && url != "/"){
 				url = url.substring(0, url.length - 1)
 			}
-			let insert_result = await db.insert("api_request", ["admin_id", "endpoint"], [requestToken, url])
+			let insert_result = await db.insert("api_request", ["admin_id", "endpoint", "method"], [requestToken, url, req.method])
 			//next middleware
 			next()
 		}catch(e){
