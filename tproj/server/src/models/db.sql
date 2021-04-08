@@ -17,3 +17,12 @@ CREATE TABLE IF NOT EXISTS api_request(
     PRIMARY KEY(request_id),
     FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
 );
+
+CREATE TABLE IF NOT EXISTS user(
+    user_id VARCHAR (100) NOT NULL UNIQUE,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(511) NOT NULL,
+    salt VARCHAR(40) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(user_id)
+);
