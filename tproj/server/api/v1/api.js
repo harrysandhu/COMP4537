@@ -6,6 +6,7 @@ import Admin from '../../src/Admin'
 import DBManager from '../../src/DBManager'
 import { verify } from 'crypto'
 import Helper from '../../src/Helper'
+import User from '../../src/User'
 let path = require("path")
 let api = express.Router()
 let privateKey = fs.readFileSync("./src/security/private.key", "utf8");
@@ -53,11 +54,53 @@ api.post("/admin/register", async(req, res) => {
     }
 })
 
+
+
+api.post("/user/register", async(req, res) => {
+    try{
+        // validate the request
+        let {username, password, repeat_password} = req.body
+        
+        //create a DBManager instance (dependecy injection)
+        let db = new DBManager(CONFIG)
+        
+        //validate, create, and register admin using db
+        let result = await User.create({username, password, repeat_password}, db)
+        if(result.get().isError){throw result}
+        console.log(result)
+        //if error result will be thrown as an error
+        // by default, its a success.
+        return res.status(200).json(result)
+        
+    }catch(e){
+        if("get" in e){
+            return res.status(400).json({error: e.get()})    
+        }
+        console.log(e)
+        return res.status(400).json({error: "Invalid Request."})
+    }
+})
+
 api.post("/admin/login", async(req, res) =>{
     try{
         let {username, password} = req.body
         let db = new DBManager(CONFIG)
         let result = await Admin.login({username, password}, db)
+        return res.status(200).json(result)
+    }catch(e){
+        if("get" in e){
+            return res.status(400).json({error: e.get()})    
+        }
+        console.log(e)
+        return res.status(400).json({error: "Invalid Request."})
+    }
+})
+
+api.post("/user/login", async(req, res) =>{
+    try{
+        let {username, password} = req.body
+        let db = new DBManager(CONFIG)
+        let result = await User.login({username, password}, db)
         return res.status(200).json(result)
     }catch(e){
         if("get" in e){
@@ -92,8 +135,7 @@ async (req, res, next) =>{
 Helper.verifyAuthToken,
 async (req, res) =>{
     try{
-        console.log(req.method)
-        let currentUser = "sample user"
+        let currentUser = await Helper.jwtVerifyUser(req.token, publicKey)
         // get user data -> ledgers and shit and merge it into user object
         return res.json({user: currentUser, ledger: [1, 2, 3, 4]})
     }catch(e){
