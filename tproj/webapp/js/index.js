@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async (event)=>{
             let result = await User.login(username, password)
             console.log(result)
             if(!result.isError){
-                localStorage.setItem("authToken", result.success.authToken)
+                localStorage.setItem("uauthToken", result.success.authToken)
                 window.location.href = "home.html"
             }else{
                 throw result.error

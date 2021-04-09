@@ -8,6 +8,10 @@ class H{
         return node.querySelector(identifier);
     }
 
+    static d(id){
+        return document.querySelector(id)
+    }
+
     static n(name){
         return document.getElementsByName(name);
     }
