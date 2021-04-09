@@ -1,7 +1,7 @@
-// let BASE_URL = "http://localhost:4040/op/api/v1"
-let BASE_URL = "https://truffen.com/op/api/v1"
-
-class Admin{
+let BASE_URL = "http://localhost:4040/op/api/v1"
+// let BASE_URL = "https://truffen.com/op/api/v1"
+let API_KEY = "e5bG9U2NwD"
+class User{
     static async verifyLogin(){
         return new Promise(async (resolve, reject) => {
             try{
@@ -14,7 +14,8 @@ class Admin{
                         headers: {
                             'Access-Control-Allow-Origin': '*',
                             'Access-Control-Max-Age': 2592000, // 30 days
-                            'Authorization': authToken
+                            'Authorization': authToken,
+                            "x-api-key": API_KEY
                         }   
                     })
                     if (res){
@@ -66,7 +67,8 @@ class Admin{
                     headers: {
                         'Access-Control-Allow-Origin': '*',
                         'Access-Control-Max-Age': 2592000,// 30 days
-                        'Authorization': authToken
+                        'Authorization': authToken,
+                        "x-api-key": API_KEY
                     }
                 })
                 if (res){
@@ -80,6 +82,5 @@ class Admin{
             }
         })
     }
-
 
 }
