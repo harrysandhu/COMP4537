@@ -78,23 +78,9 @@ export default class User{
         }
     }
     
-    static async fetch_endpoint_data(user_id, db){
-        try{
-            let api_data = await db.select_grouped("api_request", 
-            ["endpoint", "method"], 
-            {"user_id": user_id},
-            ["endpoint", "method"]
-            )
-            return Result.Success(api_data)
-        }catch(e){
-            console.log("WE HERE")
-            console.log(e)
-            if("details" in e){
-                e = e.details
-                e.code = "SQL"
-            }    
-            throw Result.Error(e)
-        }
-    }
+
+
+
     
 }
+
