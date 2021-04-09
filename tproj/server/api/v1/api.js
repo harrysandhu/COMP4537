@@ -137,7 +137,7 @@ async (req, res) =>{
     try{
         let currentUser = await Helper.jwtVerifyUser(req.token, publicKey)
         // get user data -> ledgers and shit and merge it into user object
-        return res.json({user: currentUser, ledger: [1, 2, 3, 4]})
+        return res.json({...currentUser})
     }catch(e){
         if("get" in e){
             return res.status(400).json({error: e.get()})    
@@ -147,6 +147,59 @@ async (req, res) =>{
     }
 }
 )
+
+
+api.get("/ledgers", 
+async (req, res, next) =>{
+    await Helper.verifyRequest(req, res, next, new DBManager(CONFIG))
+},
+Helper.verifyAuthToken, 
+async (req, res) =>{
+    try{
+        let currentUser = await Helper.jwtVerifyUser(req.token, publicKey)
+        let db = new DBManager(CONFIG)
+        // let ledgers = await User.get_all_ledgers(currentUser.user_id, db)
+        let ledgers = [1, 2, 3]
+        // get user data -> ledgers and shit and merge it into user object
+        return res.json(ledgers)
+    }catch(e){
+        if("get" in e){
+            return res.status(400).json({error: e.get()})    
+        }
+        console.log(e)
+        return res.status(400).json({error: "Invalid Request."})
+    }
+}
+)
+
+
+
+// create a new ledger
+api.post("/ledger", 
+async (req, res, next) =>{
+    await Helper.verifyRequest(req, res, next, new DBManager(CONFIG))
+},
+Helper.verifyAuthToken, 
+async (req, res) =>{
+    try{
+        let currentUser = await Helper.jwtVerifyUser(req.token, publicKey)
+        let db = new DBManager(CONFIG)
+        let {user_id} = currentUser
+        let {ledger_name, users} = req.body
+
+
+        // get user data -> ledgers and shit and merge it into user object
+        return res.json({ledger_name, users})
+    }catch(e){
+        if("get" in e){
+            return res.status(400).json({error: e.get()})    
+        }
+        console.log(e)
+        return res.status(400).json({error: "Invalid Request."})
+    }
+}
+)
+
 
 
 api.get("/ledger/:id", 
