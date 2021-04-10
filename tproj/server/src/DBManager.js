@@ -1,74 +1,113 @@
 import Result from "./Result";
 let mysql = require("mysql")
-/**
-* DBManager provides an interface for all use cases.
-* 
-*/
-export default class DBManager{
-    constructor(config){
+    /**
+     * DBManager provides an interface for all use cases.
+     * 
+     */
+export default class DBManager {
+    constructor(config) {
         this.con = mysql.createConnection(config)
         this.con.connect()
     }
-    
-    async insert(table, columns, values){
+
+    async insert(table, columns, values) {
         return new Promise((resolve, reject) => {
-            try{
+            try {
                 let sql = "INSERT INTO ?? (??) VALUES (?)"
                 sql = mysql.format(sql, [table, columns, values])
-                this.con.query(sql, (error, results, fields) =>{
+                this.con.query(sql, (error, results, fields) => {
                     if (error) reject(error)
-                    else{
+                    else {
                         resolve(results)
                     }
                 })
-                
-            }catch(e){
+
+            } catch (e) {
                 reject("Database error: cannot register admin")
-            }finally{
+            } finally {
                 // this.con.end()
-            }  
+            }
         })
     }
-    
-    async select(table, columns, values){
+
+    async insertT(table, columns, values) {
         return new Promise((resolve, reject) => {
-            try{
+            try {
+                let sql = "INSERT INTO ?? (??) VALUES ?"
+                sql = mysql.format(sql, [table, columns, values])
+                this.con.query(sql, (error, results, fields) => {
+                    if (error) reject(error)
+                    else {
+                        resolve(results)
+                    }
+                })
+
+            } catch (e) {
+                reject("Database error: cannot register admin")
+            } finally {
+                // this.con.end()
+            }
+        })
+    }
+
+    async select(table, columns, values) {
+        return new Promise((resolve, reject) => {
+            try {
                 let sql = "SELECT ?? FROM ?? WHERE ?"
                 sql = mysql.format(sql, [columns, table, values])
-                this.con.query(sql, (error, results, fields) =>{
+                this.con.query(sql, (error, results, fields) => {
                     if (error) reject(error)
-                    else{
+                    else {
                         resolve(JSON.parse(JSON.stringify(results)))
                     }
                 })
-                
-            }catch(e){
+
+            } catch (e) {
                 reject("Database error: cannot fetch data")
-            }finally{
+            } finally {
                 // this.con.end()
-            }  
+            }
         })
     }
 
-    async select_grouped(table, columns, values, group){
+    async select_grouped(table, columns, values, group) {
         return new Promise((resolve, reject) => {
-            try{
+            try {
                 let sql = "SELECT ??, COUNT(*) as count FROM ?? WHERE ? GROUP BY ??"
                 sql = mysql.format(sql, [columns, table, values, group])
-                this.con.query(sql, (error, results, fields) =>{
+                this.con.query(sql, (error, results, fields) => {
                     if (error) reject(error)
-                    else{
+                    else {
                         resolve(JSON.parse(JSON.stringify(results)))
                     }
                 })
-                
-            }catch(e){
+
+            } catch (e) {
                 reject("Database error: cannot fetch grouped data")
-            }finally{
+            } finally {
                 // this.con.end()
-            }  
+            }
         })
     }
-    
-}
 
+
+    async exec(sql, values) {
+        return new Promise((resolve, reject) => {
+            try {
+                sql = mysql.format(sql, values)
+                this.con.query(sql, (error, results, fields) => {
+                    if (error) reject(error)
+                    else {
+                        resolve(JSON.parse(JSON.stringify(results)))
+                    }
+                })
+
+            } catch (e) {
+                reject("Database error: cannot fetch data")
+            } finally {
+                // this.con.end()
+            }
+        })
+    }
+
+}
