@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", async (event)=>{
     }
     let loginBtn = H._(document, ".loginBtn")
     loginBtn.addEventListener("click", async (event) => {
+        //TODO : Form validation, and error handling
         let username = H._(document, ".usernameInput").value
         let password = H._(document, ".passwordInput").value
         console.log(username, password)
