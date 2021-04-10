@@ -1,3 +1,4 @@
+// TODO : Can we decompose this raw code into functions? not a fan of spaghetti code.
 
 document.addEventListener("DOMContentLoaded", async (event)=>{
     try{
@@ -27,6 +28,13 @@ document.addEventListener("DOMContentLoaded", async (event)=>{
             console.log(e)
         }
     })
+
+
+    /**
+     * Trigger a custom event
+     * @param {*} el the element 
+     * @param {*} etype event type
+     */
     function eventFire(el, etype){
         if (el.fireEvent) {
          (el.fireEvent('on' + etype));
@@ -36,10 +44,12 @@ document.addEventListener("DOMContentLoaded", async (event)=>{
           el.dispatchEvent(evObj);
         }
       }
+
+
     createBtn.addEventListener("click", async (event) =>{
         try{
+            // TODO : Ledger form validation and error handling
            var myModal = document.getElementById('newLedgerModal')
-
             let ledger_name = H.d("#ledger-name").value
             let users = H.d("#ledger-users").value
             users = users.split(",")
@@ -62,8 +72,21 @@ document.addEventListener("DOMContentLoaded", async (event)=>{
             console.log(e)
         }
     })
+    // TODO : Validate usernames on change
+        // let tagInput = H.d(".tag-input")
+        // tagInput.addEventListener("DOMNodeInserted", async (event) => {
+        //     if(event.srcElement.className == "title"){
+
+        //     }
+        // })
+
+        // let usersTF = H.d("#ledger-users")
+        // usersTF.addEventListener("change", async (event) =>{
+        //     console.log("hello")
+        // })
 
 
+    
 })
 
 
