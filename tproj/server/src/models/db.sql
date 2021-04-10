@@ -26,3 +26,21 @@ CREATE TABLE IF NOT EXISTS user(
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(user_id)
 );
+
+CREATE TABLE IF NOT EXISTS ledger(
+    ledger_id VARCHAR (100) NOT NULL UNIQUE,
+    ledger_name VARCHAR (100) NOT NULL,
+    is_active TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+);
+
+
+
+CREATE TABLE IF NOT EXISTS ledger_user(
+    ledger_id VARCHAR (100) NOT NULL,
+    user_id VARCHAR (100) NOT NULL,
+    is_creator TINYINT(1) DEFAULT 0,
+    PRIMARY KEY(ledger_id, user_id),
+    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (ledger_id) REFERENCES ledger(ledger_id),
+);
