@@ -13,7 +13,7 @@ function render(l) {
     H._(c, ".card-subtitle").id = "card-subtitle-" + id
     let subtitle = H._(c, "#card-subtitle-" + id)
    
-   
+
     for (let u of l.users) {
         let utag = document.createElement("span")
         utag.className = "tag-" + id + "-" + u.username
@@ -33,6 +33,7 @@ function render(l) {
         }
 
     }
+      H._(c, ".ledger_card").style.cssText = "padding: 0% 15%"
     document.body.appendChild(c)
 }
 

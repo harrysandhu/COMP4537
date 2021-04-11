@@ -32,6 +32,8 @@ function render(l) {
             tagt.style.cssText = "color:#000; display:block;position:relative;font-size:14px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin:0 8px"
         }
 
+        H._(c, ".ledger_card").style.cssText = "padding: 0% 15%"
+
     }
     document.body.appendChild(c)
 }
@@ -42,10 +44,16 @@ async function renderLedgers() {
         let authToken = localStorage.getItem("uauthToken")
         let ledgers = await Ledger.get_all(authToken)
         console.log(ledgers)
+       
         for (const l of ledgers) {
             render(l)
         }
 
+         if(ledgers.length == 0){
+             H.d(".page_status").textContent = "You don't have any ledgers yet."
+        }else{
+             H.d(".page_status").textContent = ""
+        }
     } catch (e) {
         console.log(e)
         console.log("Something went wrong")
