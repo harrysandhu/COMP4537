@@ -67,12 +67,13 @@ api.post("/user/register", async(req, res) => {
         let { username, password, repeat_password } = req.body
 
         //validate, create, and register admin using db
-        let result = await User.create({ username, password, repeat_password }, db)
-        if (result.get().isError) { throw result }
-        console.log(result)
+        let res = await User.create({ username, password, repeat_password }, db)
+        if (res.get().isError) { throw res }
+        console.log(res)
+        let result = await User.login({ username, password }, db)
+        return res.status(200).json(result)
             //if error result will be thrown as an error
             // by default, its a success.
-        return res.status(200).json(result)
 
     } catch (e) {
         if ("get" in e) {
@@ -208,8 +209,8 @@ api.post("/ledger",
             }
             userIDs.push(user_id)
             let result = await Ledger.create(ledger_name, user_id, userIDs, db)
-            let ledger_id = result.get()
-            return res.json({ ledger_id, success: true })
+            let ledger = result.get()
+            return res.json(ledger)
 
         } catch (e) {
             if ("get" in e) {
@@ -233,16 +234,23 @@ api.get("/ledger/:id",
     },
     Helper.verifyAuthToken,
     async(req, res) => {
+        let db = new DBManager(CONFIG)
         try {
-            let ledger = "sample ledger"
+            let currentUser = await Helper.jwtVerifyUser(req.token, publicKey)
+            let { user_id } = currentUser
+            let ledger_id = req.params.id
+            let result = await Ledger.get(ledger_id, user_id, db)
+            let ledger = result.get()
+            return res.json(ledger)
                 // get user data and merge it into user object
-            return res.json({ ledger })
         } catch (e) {
             if ("get" in e) {
                 return res.status(400).json({ error: e.get() })
             }
             console.log(e)
             return res.status(400).json({ error: "Invalid Request." })
+        } finally {
+            db.con.end()
         }
     }
 )
