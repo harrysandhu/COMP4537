@@ -67,11 +67,11 @@ api.post("/user/register", async(req, res) => {
         let { username, password, repeat_password } = req.body
 
         //validate, create, and register admin using db
-        let res = await User.create({ username, password, repeat_password }, db)
-        if (res.get().isError) { throw res }
-        console.log(res)
-        let result = await User.login({ username, password }, db)
-        return res.status(200).json(result)
+        let result = await User.create({ username, password, repeat_password }, db)
+        if (result.get().isError) { throw result }
+        console.log(result)
+        let result1 = await User.login({ username, password }, db)
+        return res.status(200).json(result1)
             //if error result will be thrown as an error
             // by default, its a success.
 
