@@ -8,6 +8,7 @@ import { verify } from 'crypto'
 import Helper from '../../src/Helper'
 import User from '../../src/User'
 import Ledger from '../../src/Ledger'
+import Transaction from '../../src/Transaction'
 let path = require("path")
 let api = express.Router()
 let privateKey = fs.readFileSync("./src/security/private.key", "utf8");
@@ -257,8 +258,61 @@ api.get("/ledger/:id",
 
 
 
+// create a new transaction
+api.post("/transaction",
+    async(req, res, next) => {
+        await Helper.verifyRequest(req, res, next, new DBManager(CONFIG))
+    },
+    Helper.verifyAuthToken,
+    async(req, res) => {
+        let db = new DBManager(CONFIG)
+        try {
+            let currentUser = await Helper.jwtVerifyUser(req.token, publicKey)
+            let { user_id } = currentUser
+            let { tr_name, ledger_id, amount } = req.body
+            let userIDs = []
+
+            let result = await Transaction.create(tr_name, ledger_id, amount, db)
+            let tr = result.get()
+            return res.json(tr)
+
+        } catch (e) {
+            if ("get" in e) {
+                return res.status(400).json({ error: e.get() })
+            }
+            console.log(e)
+            return res.status(400).json({ error: "Invalid Request." })
+        } finally {
+            db.con.end()
+        }
+    }
+)
 
 
+api.get("/transactions",
+    async(req, res, next) => {
+        await Helper.verifyRequest(req, res, next, new DBManager(CONFIG))
+    },
+    Helper.verifyAuthToken,
+    async(req, res) => {
+        let db = new DBManager(CONFIG)
+        try {
+            let currentUser = await Helper.jwtVerifyUser(req.token, publicKey)
+            let { ledger_id } = req.query
+            let trs = await Transaction.get_all(ledger_id, db)
+                // get user data -> ledgers and shit and merge it into user object
+            return res.json(trs.get())
+        } catch (e) {
+            if ("get" in e) {
+                return res.status(400).json({ error: e.get() })
+            }
+            console.log(e)
+            return res.status(400).json({ error: "Invalid Request." })
+        } finally {
+            db.con.end()
+        }
+    }
+)
 
 
 module.exports = api
