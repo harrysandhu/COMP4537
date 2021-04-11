@@ -46,3 +46,15 @@ CREATE TABLE IF NOT EXISTS ledger_user(
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (ledger_id) REFERENCES ledger(ledger_id)
 );
+
+
+
+CREATE TABLE IF NOT EXISTS tr_ledger(
+    tr_id VARCHAR (100) NOT NULL UNIQUE,
+    tr_name VARCHAR(100) NOT NULL,
+    amount INT NOT NULL DEFAULT 0,
+    ledger_id VARCHAR (100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(tr_id, ledger_id),
+    FOREIGN KEY(ledger_id) REFERENCES ledger(ledger_id)
+);
