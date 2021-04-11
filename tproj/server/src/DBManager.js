@@ -6,8 +6,12 @@ let mysql = require("mysql")
      */
 export default class DBManager {
     constructor(config) {
-        this.con = mysql.createConnection(config)
-        this.con.connect()
+        try {
+            this.con = mysql.createConnection(config)
+            this.con.connect()
+        } catch (e) {
+            throw 1 / 0
+        }
     }
 
     async insert(table, columns, values) {

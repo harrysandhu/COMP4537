@@ -54,7 +54,7 @@
             </div>
 
        </div>
-       <div class="row">
+       <div class="row ledger_section">
         <template class="ledger_template">
             <div class="row ledger_content" >
               <div class="col ledger_card" >
@@ -81,29 +81,40 @@
           </template>
        </div>
 
-       <div class="row">
-         <!-- <template class="transaction_template"> -->
+       <div class="row transaction_section" >
+        <template class="tr_template">
            <div class="row transaction_content">
               <div class="col transaction_card card">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-10">
-                      <h3 class="card-title">TRANSACTION NAME</h3>
+                      <h6 class="card-title">TRANSACTION NAME</h6>
                       <h6 class="card-subtitle mb-2 text-muted">TRANSACTION COST</h6>
                     </div>
-                    <div class="col-2">
-                      <div class="row">
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#editTrModal" class="btn btn-secondary float-right" id="editTrBtn">Edit</a>
-                      </div>
-                      <div class="row">
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#delTrModal" class="btn btn-danger float-right" id="delTrBtn">Delete</a>
+                    <div class="col-2 justify-content-md-center">
+                      <div class="row justify-content-md-flex-end">
+                      <div class="col">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#editTrModal" class="btn btn-secondary float-right editBtn" id="editTrBtn">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                            </svg>
+                        </a>
+                        </div>
+
+                        <div class="col">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#delTrModal" class="btn btn-danger float-right deleteBtn" id="delTrBtn">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+</svg>
+                        </a>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
            </div>
-         <!-- </template> -->
+         </template>
         </div>
     </div>
         
@@ -146,11 +157,11 @@
       <div class="modal-body">
         <form>
           <div class="mb-3">
-            <label for="ledger-name" class="col-form-label">Transaction Name </label>
+            <label for="tr_name" class="col-form-label">Transaction Name </label>
             <input type="text" class="form-control" id="tr_name" value="GET FROM DB">
           </div>
           <div class="mb-3">
-            <label for="ledger-name" class="col-form-label">Amount</label>
+            <label for="ledger-tr_amount" class="col-form-label">Amount</label>
             <input type="number" class="form-control" id="tr_amount" value="GET FROM DB">
           </div>
         </form>

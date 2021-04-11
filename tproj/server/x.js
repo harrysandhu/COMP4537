@@ -1,8 +1,12 @@
-let x = {
-    s : "s"
+function x() {
+    try {
+        return 1
+    } catch (e) {
+        console.log("S")
+    } finally {
+        console.log("f")
+    }
 }
 
 
-if("s" in x){
-    console.log("Ss")
-}
+console.log(x())

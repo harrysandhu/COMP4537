@@ -24,6 +24,13 @@ let CONFIG = {
     max_connections: 40000
 }
 
+// let CONFIG = {
+//     user: "sarahesl_admin",
+//     host: "s11.fcomet.com",
+//     password: "thisisapassword",
+//     database: "sarahesl_finalproj"
+// }
+
 api.use(express.static(__dirname))
 
 /**Admin Resource
@@ -92,7 +99,6 @@ api.post("/admin/login", async(req, res) => {
     try {
         let { username, password } = req.body
         let result = await Admin.login({ username, password }, db)
-        db.con.end()
         return res.status(200).json(result)
     } catch (e) {
         if ("get" in e) {
@@ -300,6 +306,60 @@ api.get("/transactions",
             let currentUser = await Helper.jwtVerifyUser(req.token, publicKey)
             let { ledger_id } = req.query
             let trs = await Transaction.get_all(ledger_id, db)
+                // get user data -> ledgers and shit and merge it into user object
+            return res.json(trs.get())
+        } catch (e) {
+            if ("get" in e) {
+                return res.status(400).json({ error: e.get() })
+            }
+            console.log(e)
+            return res.status(400).json({ error: "Invalid Request." })
+        } finally {
+            db.con.end()
+        }
+    }
+)
+
+
+
+api.put("/transaction",
+    async(req, res, next) => {
+        await Helper.verifyRequest(req, res, next, new DBManager(CONFIG))
+    },
+    Helper.verifyAuthToken,
+    async(req, res) => {
+        let db = new DBManager(CONFIG)
+        try {
+            let currentUser = await Helper.jwtVerifyUser(req.token, publicKey)
+            let { tr_id, name, amount } = req.body
+            let trs = await Transaction.edit(tid, name, amount, db)
+                // get user data -> ledgers and shit and merge it into user object
+            return res.json(trs.get())
+        } catch (e) {
+            if ("get" in e) {
+                return res.status(400).json({ error: e.get() })
+            }
+            console.log(e)
+            return res.status(400).json({ error: "Invalid Request." })
+        } finally {
+            db.con.end()
+        }
+    }
+)
+
+
+
+api.delete("/transaction",
+    async(req, res, next) => {
+        await Helper.verifyRequest(req, res, next, new DBManager(CONFIG))
+    },
+    Helper.verifyAuthToken,
+    async(req, res) => {
+        let db = new DBManager(CONFIG)
+        try {
+            let currentUser = await Helper.jwtVerifyUser(req.token, publicKey)
+            let { tr_id } = req.body
+            let trs = await Transaction.get_all(tr_id, db)
                 // get user data -> ledgers and shit and merge it into user object
             return res.json(trs.get())
         } catch (e) {

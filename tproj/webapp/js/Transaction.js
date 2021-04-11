@@ -64,4 +64,66 @@ class Transaction {
 
 
 
+    static async edit(tr_id, name, amount, authToken) {
+        return new Promise(async(resolve, reject) => {
+            try {
+                let res = await axios({
+                    method: 'PUT',
+                    url: BASE_URL + "/transaction",
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Max-Age': 2592000,
+                        'Authorization': authToken,
+                        "x-api-key": API_KEY
+                    },
+                    params: {
+                        tr_id,
+                        name,
+                        amount
+                    }
+
+                })
+                if (res) {
+                    resolve(res.data)
+                } else throw res
+
+            } catch (e) {
+                console.log(e)
+                reject("Unauthorized")
+            }
+        })
+    }
+
+
+
+    static async delete(tr_id, authToken) {
+        return new Promise(async(resolve, reject) => {
+            try {
+                let res = await axios({
+                    method: 'DELETE',
+                    url: BASE_URL + "/transaction",
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Max-Age': 2592000,
+                        'Authorization': authToken,
+                        "x-api-key": API_KEY
+                    },
+                    params: {
+                        tr_id
+                    }
+
+                })
+                if (res) {
+                    resolve(res.data)
+                } else throw res
+
+            } catch (e) {
+                console.log(e)
+                reject("Unauthorized")
+            }
+        })
+    }
+
+
+
 }

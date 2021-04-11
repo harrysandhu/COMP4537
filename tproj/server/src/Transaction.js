@@ -90,5 +90,42 @@ export default class Transaction {
     }
 
 
+    static async edit(tr_id, name, amount db) {
+        try {
+            let results = await db.exec("UPDATE tr_ledger SET tr_id=?, tr_name=?, amount=?", [tr_id, ledger_id])
+
+            return Result.Success(results)
+        } catch (e) {
+            console.log("WE HERE")
+            console.log(e)
+            if ("details" in e) {
+                e = e.details
+                e.code = "JOI"
+            }
+            throw Result.Error(e)
+        }
+    }
+
+    static async delete(tr_id, ledger_id, db) {
+        try {
+            let results = await db.exec("SELECT * FROM tr_ledger JOIN ledger ON ledger.ledger_id = tr_ledger.ledger_id WHERE tr_id=? AND tr_ledger.ledger_id=?", [tr_id, ledger_id])
+            for await (const res of results) {
+                res.users = []
+                let u_res = await db.exec("SELECT ledger_user.user_id, user.username FROM ledger_user JOIN user on ledger_user.user_id = user.user_id WHERE ledger_id=?", [ledger_id])
+                res.users = u_res
+            }
+
+            return Result.Success(results)
+        } catch (e) {
+            console.log("WE HERE")
+            console.log(e)
+            if ("details" in e) {
+                e = e.details
+                e.code = "JOI"
+            }
+            throw Result.Error(e)
+        }
+    }
+
 
 }
