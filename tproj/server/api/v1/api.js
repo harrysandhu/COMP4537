@@ -32,6 +32,11 @@ const pool = mysql.createPool(CONFIG)
 
 api.use(express.static(__dirname))
 
+api.get("/", async(req, res) => {
+    res.redirect('https://olivesky.ca/op')
+})
+
+
 /**Admin Resource
  * Endpoints:
  * 1. POST /admin/register
