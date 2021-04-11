@@ -1,7 +1,7 @@
 <!doctype HTML>
 <html lang="en"> 
     <head>
-        <title>Home</title>            
+        <title>Ledger</title>            
           <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,7 +38,7 @@
 
                 <h2>@<span class="username"></span></h2>
             </div>
-            <div class="col-4"></div>
+            <div class="col-2"></div>
             <div class="col">
               <div class="form-group">
                 <button class="btn btn-danger logoutBtn">Logout</button>
@@ -56,19 +56,29 @@
        <div class="row">
         <template class="ledger_template">
                 <div class="row ledger_content" >
-                  <div class="col-3"></div>
 
-                  <div class="col">
+                  <div class="col ledger_card" >
                     <div class="card">
                       <div class="card-body">
-                        <h5 class="card-title"></h5>
-                        <h6 class="card-subtitle mb-2 text-muted"></h6>
-                        
+                        <div class="row">
+                            <div class="col-10">
+                                <h3 class="card-title"></h3>
+                                <h6 class="card-subtitle mb-2 text-muted"></h6>
+                            </div>
+                            <div class="col-2">
+                                  <a class="btn btn-primary float-right" href="home.html" role="button">
+                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                                      <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                          <div class="row justify-content-md-center">
+                            
+                          </div>
                       </div>
                     </div>
                   </div>
-
-                  <div class="col-3"></div>
                 </div>
               </template>
        </div>
