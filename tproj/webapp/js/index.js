@@ -1,36 +1,32 @@
-document.addEventListener("DOMContentLoaded", async (event)=>{
-    try{
+document.addEventListener("DOMContentLoaded", async(event) => {
+    try {
         let result = await User.verifyLogin()
-        if(result.user_id){
+        if (result.user_id) {
             console.log(result)
             window.location.href = "home.html"
-          
+
         }
-    }catch(e){
+    } catch (e) {
         console.log(e)
     }
     let loginBtn = H._(document, ".loginBtn")
-    loginBtn.addEventListener("click", async (event) => {
-        //TODO : Form validation, and error handling
+    loginBtn.addEventListener("click", async(event) => {
         let username = H._(document, ".usernameInput").value
         let password = H._(document, ".passwordInput").value
         console.log(username, password)
-        try{
+        try {
             let result = await User.login(username, password)
             console.log(result)
-            if(!result.isError){
+            if (!result.isError) {
                 localStorage.setItem("uauthToken", result.success.authToken)
                 window.location.href = "home.html"
-            }else{
+            } else {
                 throw result.error
             }
-            
-        }catch(e){
-
+        } catch (e) {
+            console.log("we here!!")
             alert("Incorrect Username/Password")
             console.log(e)
         }
     })
 })
-
-
