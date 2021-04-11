@@ -14,7 +14,7 @@
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="./js/Helper.js"></script>
         <script src="./js/User.js"></script>
-        <script src="./js/index.js"></script>
+        <script src="./js/signup.js"></script>
         <link rel="stylesheet" href="./css/style.css">
     </head>
     <body>
@@ -39,13 +39,17 @@
                 <form class="createForm">
                   <div class="form-group">
                     <label for="usernameInput">Username</label>
-                    <input type="text" class="form-control usernameInput" id="usernameInput">
+                    <input type="text" class="form-control usernameInput" id="usernameInput" required>
                   </div>
                   <div class="form-group">
                     <label for="passwordInput">Password</label>
-                    <input type="password" class="form-control passwordInput" id="passwordInput">
+                    <input type="password" class="form-control passwordInput" id="passwordInput" required>
                   </div>
-                  <button type="submit" class="btn btn-primary signupBtn mt-3 float-right">Create</button>
+                  <div class="form-group">
+                    <label for="passwordInput">Repeat Password</label>
+                    <input type="password" class="form-control passwordInput2" id="passwordInput2" required>
+                  </div>
+                  <button type="button" class="btn btn-primary signupBtn mt-3 float-right">Create</button>
                 </form>
               </div>
             </div>
