@@ -26,11 +26,15 @@
 
     </div>
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>@<span class="username"></span></h1>
+         <div class="row">
+             <div class="col-3">
+               <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newLedgerModal">+ Ledger</button>
             </div>
-            <div class="col-9"></div>
+            <div class="col">
+
+                <h2>@<span class="username"></span></h2>
+            </div>
+            <div class="col-2"></div>
             <div class="col">
               <div class="form-group">
                 <button class="btn btn-danger logoutBtn">Logout</button>
@@ -38,11 +42,12 @@
             </div>
         </div>
 
+
         <div class="row">
           <div class="content">
   
             <div class="form-group">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newLedgerModal">New Ledger</button>
+               
                 <div class="modal fade" id="newLedgerModal" tabindex="-1" aria-labelledby="newLedgerLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
@@ -74,16 +79,16 @@
             </div>
 
             <div class="ledgers mt-3">
-              <template>
-                <div class="row">
+              <template class="ledger_template">
+                <div class="row ledger_content" >
                   <div class="col-3"></div>
 
                   <div class="col">
                     <div class="card">
                       <div class="card-body">
                         <h5 class="card-title">INSERT LEDGER NAME HERE</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">INSERT Ledger Members Names Here</h6>
-                        <a href="#" class="btn btn-primary float-right">Access Ledger</a>
+                        <h6 class="card-subtitle mb-2 text-muted"></h6>
+                        <a href="#" class="btn btn-primary float-right accessBtn">Access Ledger</a>
                       </div>
                     </div>
                   </div>
