@@ -39,7 +39,9 @@ export default class Ledger {
             })
             let insert_result = await db.insert("ledger", ["ledger_id", "ledger_name", "created_by"], [ledger_id, ledger_name, user_id])
             let lu_insert_result = await db.insertT("ledger_user", ["ledger_id", "user_id"], inserts)
-            return Result.Success(ledger_id)
+            let result = await Ledger.get(ledger_id, user_id, db)
+
+            return Result.Success(result.get())
         } catch (e) {
             console.log("WE HERE")
             console.log(e)
@@ -58,6 +60,26 @@ export default class Ledger {
             for await (const res of results) {
                 res.users = []
                 let u_res = await db.exec("SELECT ledger_user.user_id, user.username FROM ledger_user JOIN user on ledger_user.user_id = user.user_id WHERE ledger_id=?", [res.ledger_id])
+                res.users = u_res
+            }
+            return Result.Success(results)
+        } catch (e) {
+            console.log("WE HERE")
+            console.log(e)
+            if ("details" in e) {
+                e = e.details
+                e.code = "JOI"
+            }
+            throw Result.Error(e)
+        }
+    }
+
+    static async get(ledger_id, user_id, db) {
+        try {
+            let results = await db.exec("SELECT * FROM ledger_user JOIN ledger on ledger_user.ledger_id=ledger.ledger_id WHERE ledger_user.ledger_id=? AND user_id=?", [ledger_id, user_id])
+            for await (const res of results) {
+                res.users = []
+                let u_res = await db.exec("SELECT ledger_user.user_id, user.username FROM ledger_user JOIN user on ledger_user.user_id = user.user_id WHERE ledger_id=?", [ledger_id])
                 res.users = u_res
             }
             return Result.Success(results)
