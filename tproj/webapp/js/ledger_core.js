@@ -12,7 +12,7 @@ function render(l) {
 
     H._(c, ".card-subtitle").id = "card-subtitle-" + id
     let subtitle = H._(c, "#card-subtitle-" + id)
-   
+
 
     for (let u of l.users) {
         let utag = document.createElement("span")
@@ -33,7 +33,7 @@ function render(l) {
         }
 
     }
-      H._(c, ".ledger_card").style.cssText = "padding: 0% 15%"
+    H._(c, ".ledger_card").style.cssText = "padding: 0% 15%"
     document.body.appendChild(c)
 }
 
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async(event) => {
         }
 
         let authToken = localStorage.getItem("uauthToken")
-         let userData = await User.fetch_data(authToken)
+        let userData = await User.fetch_data(authToken)
         console.log(userData)
         if (userData.user_id) {
             H._(document, ".username").textContent = userData.username
@@ -54,18 +54,21 @@ document.addEventListener("DOMContentLoaded", async(event) => {
         let url = new URL(window.location.href)
         console.log(url)
         let lid = url.search.split("&")[0].split("?id=")[1]
-        if(lid != null){
+        if (lid != null) {
             console.log(lid)
             let ledger = await Ledger.get_by_id(lid, authToken)
             render(ledger[0])
+
+            let trs = await Transaction.get_all(lid, authToken)
+            console.log("trs", trs)
             console.log(ledger)
-        }else{
+        } else {
             H.d(".page_code").textContent = "404"
             H.d(".page_status").textContent = "Page Not Found"
             H.d(".page_status").style.cssText = "font-size:30px"
             H.d(".page_code").style.cssText = "font-size:80px"
         }
-        
+
         // let userData = await Ledger.get(authToken)
 
         // if (userData.user_id) {
@@ -76,7 +79,49 @@ document.addEventListener("DOMContentLoaded", async(event) => {
         console.log(e)
             // window.location.href = "auth.html"
     }
-     let logoutBtn = H._(document, ".logoutBtn")
+
+
+
+
+
+
+
+
+
+
+
+
+    let createBtn1 = H.d("#createBtn1")
+    createBtn1.addEventListener("click", async(event) => {
+        try {
+            // TODO : Ledger form validation and error handling
+            var myModal = document.getElementById('newTrModal')
+            let tr_name = H.d("#tr_name").value
+            let tr_amount = Number(H.d("#tr_amount").value)
+            let authToken = localStorage.getItem("uauthToken")
+            let url = new URL(window.location.href)
+            console.log(url)
+            let lid = url.search.split("&")[0].split("?id=")[1]
+
+            let create_result = await Transaction.create(tr_name, lid, tr_amount, authToken)
+            console.log("WE HERE!!", create_result)
+            if (create_result) {
+
+                let cancelBtn = H.d("#cancelBtn")
+                eventFire(cancelBtn, 'click');
+                console.log(create_result)
+
+                // render(create_result[0])
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+    })
+
+
+
+    let logoutBtn = H._(document, ".logoutBtn")
     logoutBtn.addEventListener("click", async(event) => {
         try {
             localStorage.setItem("uauthToken", null)

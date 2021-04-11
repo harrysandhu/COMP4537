@@ -17,6 +17,7 @@
         <script src="./js/Helper.js"></script>
         <script src="./js/User.js"></script>
         <script src="./js/Ledger.js"></script>
+        <script src="./js/Transaction.js"></script>
         <script src="./js/ledger_core.js"></script>
         <link rel="stylesheet" href="./css/style.css">
    
@@ -76,6 +77,7 @@
                           <div class="row justify-content-md-center">
                             
                           </div>
+                      
                       </div>
                     </div>
                   </div>
@@ -97,11 +99,11 @@
                       <div class="modal-body">
                         <form>
                           <div class="mb-3">
-                            <label for="ledger-name" class="col-form-label">Transaction Name: </label>
+                            <label for="tr_name" class="col-form-label">Transaction Name: </label>
                             <input type="text" class="form-control" id="tr_name">
                           </div>
                           <div class="mb-3">
-                          <label for="ledger-name" class="col-form-label">Amount</label>
+                          <label for="tr_amount" class="col-form-label">Amount</label>
                              <input type="number" class="form-control" id="tr_amount">
 
                           </div>
@@ -109,7 +111,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" id="cancelBtn" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="createBtn">Add</button>
+                        <button type="button" class="btn btn-primary" id="createBtn1">Add</button>
                       </div>
                     </div>
                   </div>
