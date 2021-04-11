@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", async(event) => {
 
 
 
-    let createBtn1 = H.d("#createBtn1")
+    let createBtn1 = H.d("#createBtn")
     createBtn1.addEventListener("click", async(event) => {
         try {
             // TODO : Ledger form validation and error handling
