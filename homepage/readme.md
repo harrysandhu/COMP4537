@@ -7,6 +7,8 @@ You like express?, You like php?, You will love Stonk.
 Stonk's Philosophy: "Let it rip or die a virgin 🌪 
 
 
+- prof didnt allow express. so we made one. cuz we can.
+
 
 ### Docs
 
@@ -107,7 +109,7 @@ stonk.rip(PORT, ()=>{
 
 
 
-- prof didnt allow express. so we made one. cuz we can.
+
 
 
 
