@@ -7,6 +7,7 @@ You like express?, You like php?, You will love Stonk.
 Stonk's Philosophy: "Let it rip or die a virgin 🌪 
 
 
+
 ### Docs
 
 * Stonk currently supports 2 request methods, GET and POST.
@@ -104,9 +105,9 @@ stonk.rip(PORT, ()=>{
 - Performance
 
 
-Stonk was made because the prof didnt allow express. so we made one. 
 
 
+- prof didnt allow express. so we made one. cuz we can.
 
 
 
