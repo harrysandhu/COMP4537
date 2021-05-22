@@ -1,9 +1,5 @@
 ## Stonk
 
-----
-- Only supports Linux and Mac (for now)
-----
-
 ### S T O N K ----- is a sub-100 line routing library written on top of Node.js.
 
 
@@ -108,7 +104,7 @@ stonk.rip(PORT, ()=>{
 - Performance
 
 
-
+Stonk was made because the prof didnt allow express. so we made one. 
 
 
 
